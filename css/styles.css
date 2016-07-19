@@ -1,0 +1,82 @@
+* {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body {
+  padding-top: 50px;
+}
+.synoptic-reports {
+  padding: 40px 15px;
+  text-align: center;
+}
+.synoptic-reports table {
+  text-align: left;
+  width: 100%;
+}
+.synoptic-reports td, th {
+  padding: 1px;
+}
+
+.row {
+  margin-bottom: 0px;
+}
+.row .row {
+  margin-top: 2px;
+  margin-bottom: 0;
+}
+[class*="col-"] {
+  padding-top: 4px;
+  padding-bottom: 4px;
+
+}
+
+hr {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+#tumor-form td{
+  padding-bottom: 30px;
+  vertical-align: top;
+}
+
+.form-elements  {
+  width: 75%;
+}
+
+.form-elements {
+  padding-left: 25px !important;
+}
+
+#tumor-form input {
+  margin-right: 5px;
+}
+
+#tumor-type table {
+  margin-top: 50px;
+}
+
+#tumor-type {
+  text-align: left;
+}
+
+label {
+    font-weight: normal !important;
+    display: inline !important;
+}
+
+#generated-report {
+  line-height: 100%;
+}
+
+#generated-report td {
+  padding: 0px;
+}
+
+#generated-report tr td:first-child{
+    width:25%;
+    white-space:nowrap;
+}
+
