@@ -46,7 +46,7 @@ database.ref('/tumor_types/' + QueryString.id).once('value').then(function(snaps
   var tumorProperties = tumorType.properties;
 
   //Add a header
-  var tumorFormHTML = '<h1>TUMOR SUMMARY: <span id="tumor-name">' + tumorName + '</span></h1><table id="tumor-form">';
+  var tumorFormHTML = '<h1>TUMOR SUMMARY: <span id="tumor-name">' + tumorName + '</span></h1><p>If you would like to answer questions without using the mouse, you can use the tab key to move between questions and to the free text box and either the up/down or left/right arrow keys to change radio button selection.</p><table id="tumor-form">';
 
   //Add form elements based on tumor properties
   if (tumorProperties!=null){
@@ -116,7 +116,7 @@ database.ref('/tumor_types/' + QueryString.id).once('value').then(function(snaps
 			tumorFormHTML += '</td></tr>';
 	  }
 	  //Close table and add generate button and instructions
-	  tumorFormHTML += '</table><button id="generate-report-button" class="btn btn-primary" onclick="return generateReport();"">Generate Report</button><p>The text will appear below. Cut and paste into your document.</p><p>To resubmit form, change answers above and re-click button. If you refresh the page, ALL YOUR INPUT WILL DISSAPPEAR.</p>';
+	  tumorFormHTML += '</table><button id="generate-report-button" class="btn btn-primary" onclick="return generateReport();"">Generate Report</button><p>The text will appear below. Cut and paste into your document.</p><p>To resubmit form, change answers above and re-click button. If you refresh the page, ALL YOUR INPUT WILL DISAPPEAR.</p>';
 	}
 	//Add message for tumor types that have not been implemented yet.
 	else {
