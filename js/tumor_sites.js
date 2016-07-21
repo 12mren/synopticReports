@@ -112,7 +112,7 @@ database.ref('/tumor_types/' + QueryString.id).once('value').then(function(snaps
 					}
 					//Add Free text option for forms with no options.
 					else {
-						tumorFormHTML += '<input name="' + propertyName + '_' + j +  '"type="radio" checked="checked"  value="-2" id="' + propertyName + j + "_-2"  +'"><label for="' + propertyName +  j + '_-2'  + '">YOU SKIPPED THIS</label><br>';
+						tumorFormHTML += '<input name="' + propertyName + '_' + j +  '"type="radio" checked="checked"  value="-2" id="' + propertyName + j + "_-2"  +'"><label for="' + propertyName +  j + '_-2'  + '"><strong>?????YOU SKIPPED THIS!!!!!</strong></label><br>';
 						tumorFormHTML += '<input name="' + propertyName + '_' + j +  '"type="radio"   required value="-1" id="' + propertyName + j + "_-1"  +'"><label for="' + propertyName +  j+'_-1' + "_"  + '">Free text:</label> <input type="text" name="other" />​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​<br>';
 					}
 
