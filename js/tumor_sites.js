@@ -1,4 +1,5 @@
-
+var tumorProperties = {};
+var tumorName = "";
 //Get the parameters passed into the URL
 
 var QueryString = function () {
@@ -42,8 +43,8 @@ var database = firebase.database();
 database.ref('/tumor_types/' + QueryString.id).once('value').then(function(snapshot) {
 	//Get tumorType information
   var tumorType = snapshot.val();
-  var tumorName = tumorType.name;
-  var tumorProperties = tumorType.properties;
+  tumorName = tumorType.name;
+  tumorProperties = tumorType.properties;
 
   //Add a header
   var tumorFormHTML = '<h1>TUMOR SUMMARY: <span id="tumor-name">' + tumorName + '</span></h1><p>If you would like to answer questions without using the mouse, you can use the tab key to move between questions and to the free text box and either the up/down or left/right arrow keys to change radio button selection.</p><table id="tumor-form">';
@@ -54,7 +55,7 @@ database.ref('/tumor_types/' + QueryString.id).once('value').then(function(snaps
 	  	//Get property information
 			var property = tumorProperties[i];
 			var propertyName = property.name;
-			var propertyDescription = property.description!=null ? ": " + property.description : "";
+			var propertyDescription = property.description!=null ? " [" + property.description + "]" : "";
 			var propertyOptions = property.options;
 
 			//Add property title and description to web page
@@ -66,7 +67,7 @@ database.ref('/tumor_types/' + QueryString.id).once('value').then(function(snaps
 					//Get option information
 					var option = propertyOptions[j];
 					var optionName = option.name;
-					var optionDescription = option.description!=null ? ": " + option.description : "";
+					var optionDescription = option.description!=null ? " [" + option.description  + "]": "";
 					var optionGroup = option.group;
 					if (optionGroup!=null) {
 						if (j!=0) {
@@ -78,7 +79,7 @@ database.ref('/tumor_types/' + QueryString.id).once('value').then(function(snaps
 							//Get the sub otions in the group information
 							var subOption = optionGroup[k];
 							var subOptionName = subOption.name;
-							var subOptionDescription = subOption.description!=null ? ": " + subOption.description : "";
+							var subOptionDescription = subOption.description!=null ? " [" + subOption.description + "]": "";
 							var inputs = subOption.inputs_required;
 							var string_identifier = propertyName + "_" + j + "_" + k;
 
@@ -135,14 +136,14 @@ database.ref('/tumor_types/' + QueryString.id).once('value').then(function(snaps
 //Generate report.
 function generateReport() {
 	//Add header
-	var report = "<table><tr><td>| TUMOR SUMMARY:</td><td>" + $('#tumor-name').html() + "</td></tr>";
+	var report = "<table><tr><td>| TUMOR SUMMARY:</td><td>" + tumorName + "</td></tr>";
 
 	//Loop over properties (rows of table)
 	$('#tumor-form > tbody  > tr').each(function() {
 		//Grab label, add | character, and remove description (content following :)
 		var label = $(':nth-child(1)', this).html();
-		if (label.indexOf(':')!=-1){
-			label = '|' + label.substr(label.indexOf(' '), label.indexOf(':')-2);
+		if (label.indexOf('[')!=-1){
+			label = '|' + label.substr(label.indexOf(' '), label.indexOf('[')-4) + ":";
 		}
 		else {
 			label = '|' + label.substr(label.indexOf(' '), label.length+1) + ':';
@@ -164,8 +165,8 @@ function generateReport() {
 			//Else add radio button text and any additoinal input texts
 			else{
 				tempValue = $('label[for="' + selectedID + '"]').text();
-				if (tempValue.indexOf(':')!=-1) {
-					tempValue = tempValue.substr(0, tempValue.indexOf(':'));
+				if (tempValue.indexOf('[')!=-1) {
+					tempValue = tempValue.substr(0, tempValue.indexOf('['));
 				}
 				var additionalInputs = "";
 				($(":nth-child(2) > input:text[class='" + selectedClass + "']", current)).each(function() {
