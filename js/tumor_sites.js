@@ -97,10 +97,16 @@ database.ref('/tumor_types/' + QueryString.id).once('value').then(function(snaps
 								var count = 0;
 								for (l = 0; l< inputs.length; l++) {
 									var input = inputs[l];
-									if (input != "") {
-										input = "(" + input + ")";
+									if (typeof(input) === "string") {
+										inputs_string+='<input id="' + string_identifier + "_" + l + '"name="' + propertyName + '_' + j + '"class="' + subOptionName + '"type = "text" disabled/><label for="' + string_identifier + "_" + l + '">' + input +' </label>';
 									}
-									inputs_string+='<input name="' + propertyName + '_' + j + '"class="' + subOptionName + '"type = "text" disabled/><label>' + input +' </label>';
+									else {
+										inputs_string += '<select disabled name="' + propertyName + '_' + j + '"class="' + subOptionName + '">';
+										for (m=0; m<input.length; m++){
+											inputs_string += "<option value='" + input[m] + "'>" + input[m] + "</option>";
+										}
+										inputs_string += "</select>";
+									}
 									count++;
 								}
 								tumorFormHTML += '<input onchange="changeRadioButton(this);" class="' + subOptionName + '"name="' + propertyName + '_' + j +  '" type="radio" id="' + string_identifier + '"><label for="' + string_identifier + '">' + subOptionName  + subOptionDescription+' </label>' + inputs_string + '<br>';
@@ -176,8 +182,15 @@ function generateReport() {
 					tempValue = tempValue.substr(0, tempValue.indexOf('['));
 				}
 				var additionalInputs = "";
-				($(":nth-child(2) > input:text[class='" + selectedClass + "']", current)).each(function() {
-					additionalInputs += $(this).val() + " ";
+				($(":nth-child(2) > [class='" + selectedClass + "']", current)).each(function() {
+					if ($(this).attr('type') !== 'radio') {
+						additionalInputs += ", "
+						additionalInputs += $(this).val();
+						if ($(this).attr('type') === 'text') {
+							var labelId = $(this).attr("id");
+							additionalInputs += "" + $("label[for='" + labelId + "']").text();
+						}
+					}
 				});
 				tempValue = tempValue + additionalInputs;
 
@@ -193,21 +206,21 @@ function generateReport() {
   $('#generated-report').html(report);
 };
 
+
+//Disable/enable text options on radio button change
 function changeRadioButton(radioButton) {
-	console.log("hi");
   var itemClass = $(radioButton).attr('class');
   var itemName = $(radioButton).attr('name');
-  console.log(itemClass);
-  console.log(itemName)
-  $('input[type=text][name="' + itemName + '"]').each(function() {
-  	console.log(this);
+  $('input[type=text][name="' + itemName + '"], select[name="' + itemName + '"]').each(function() {
   	var textClass = $(this).attr('class');
   	if (textClass === itemClass) {
   		$(this).prop('disabled', false);
   	}
   	else {
   		$(this).prop('disabled', true);
-  		$(this).val("");
+  		// if ($(this).attr('type') === 'text'){
+  		// 	$(this).val("");
+  		// }
   	}
   })
   
