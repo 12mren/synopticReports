@@ -78,7 +78,8 @@ label {
   padding: 0px;
 }
 
-#generated-report tr td:first-child{
-    width:250px;
+#generated-report td:first-child{
+    white-space: nowrap;
+    padding-right: 5px;
 }
 

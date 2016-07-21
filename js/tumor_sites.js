@@ -76,7 +76,7 @@ database.ref('/tumor_types/' + QueryString.id).once('value').then(function(snaps
 						}
 						//Add option name and description for the group
 						tumorFormHTML += '<p>' + optionName + optionDescription + '</p>';
-						tumorFormHTML += '<input name="' + propertyName + '_' + j +  '"type="radio" checked="checked"  value="-2" id="' + propertyName + j + "_-2"  +'"><label for="' + propertyName +  j + '_-2'  + '"><strong>?????YOU SKIPPED THIS!!!!!</strong></label><br>';
+						tumorFormHTML += '<input onchange="changeRadioButton(this);" name="' + propertyName + '_' + j +  '"type="radio" checked="checked"  value="-2" id="' + propertyName + j + "_-2"  +'"><label for="' + propertyName +  j + '_-2'  + '"><strong>?????YOU SKIPPED THIS!!!!!</strong></label><br>';
 
 						for (k=0; k< optionGroup.length; k++) {
 							//Get the sub otions in the group information
@@ -88,7 +88,7 @@ database.ref('/tumor_types/' + QueryString.id).once('value').then(function(snaps
 
 							//Add radio button for suboption
 							if (inputs == null) {
-								tumorFormHTML += '<input name ="' + propertyName + '_' + j + '"type="radio" id="' + propertyName + "_" + j + "_" + k + '"><label for="' + propertyName + "_" + j + "_" + k + '">' + subOptionName  + subOptionDescription+'</label><br>';
+								tumorFormHTML += '<input onchange="changeRadioButton(this);" class="' + subOptionName + '" name ="' + propertyName + '_' + j + '"type="radio" id="' + propertyName + "_" + j + "_" + k + '"><label for="' + propertyName + "_" + j + "_" + k + '">' + subOptionName  + subOptionDescription+'</label><br>';
 							}
 
 							//If additional text input is required for suboption, add it
@@ -100,20 +100,20 @@ database.ref('/tumor_types/' + QueryString.id).once('value').then(function(snaps
 									if (input != "") {
 										input = "(" + input + ")";
 									}
-									inputs_string+='<input class="' + subOptionName + '"type = "text"/><label>' + input +' </label>';
+									inputs_string+='<input name="' + propertyName + '_' + j + '"class="' + subOptionName + '"type = "text" disabled/><label>' + input +' </label>';
 									count++;
 								}
-								tumorFormHTML += '<input class="' + subOptionName + '"name="' + propertyName + '_' + j +  '" type="radio" id="' + string_identifier + '"><label for="' + string_identifier + '">' + subOptionName  + subOptionDescription+' </label>' + inputs_string + '<br>';
+								tumorFormHTML += '<input onchange="changeRadioButton(this);" class="' + subOptionName + '"name="' + propertyName + '_' + j +  '" type="radio" id="' + string_identifier + '"><label for="' + string_identifier + '">' + subOptionName  + subOptionDescription+' </label>' + inputs_string + '<br>';
 
 							}
 						}
 						//Add Free text option
-						tumorFormHTML += '<input name="' + propertyName + '_' + j +  '"type="radio"   required value="-1" id="' + propertyName + j + "_-1"  +'"><label for="' + propertyName + j+ '_-1' + "_"  + '">Free text:</label> <input type="text" name="other" />​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​<br>';
+						tumorFormHTML += '<input class="other" onchange="changeRadioButton(this);" name="' + propertyName + '_' + j +  '"type="radio"   required value="-1" id="' + propertyName + j + "_-1"  +'"><label for="' + propertyName + j+ '_-1' + "_"  + '">Free text:</label> <input name="' + propertyName + '_' + j + '" class="other" disabled type="text"  />​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​<br>';
 					}
 					//Add Free text option for forms with no options.
 					else {
-						tumorFormHTML += '<input name="' + propertyName + '_' + j +  '"type="radio" checked="checked"  value="-2" id="' + propertyName + j + "_-2"  +'"><label for="' + propertyName +  j + '_-2'  + '"><strong>?????YOU SKIPPED THIS!!!!!</strong></label><br>';
-						tumorFormHTML += '<input name="' + propertyName + '_' + j +  '"type="radio"   required value="-1" id="' + propertyName + j + "_-1"  +'"><label for="' + propertyName +  j+'_-1' + "_"  + '">Free text:</label> <input type="text" name="other" />​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​<br>';
+						tumorFormHTML += '<input onchange="changeRadioButton(this);" name="' + propertyName + '_' + j +  '"type="radio" checked="checked"  value="-2" id="' + propertyName + j + "_-2"  +'"><label for="' + propertyName +  j + '_-2'  + '"><strong>?????YOU SKIPPED THIS!!!!!</strong></label><br>';
+						tumorFormHTML += '<input class="other" onchange="changeRadioButton(this);" name="' + propertyName + '_' + j +  '"type="radio"   required value="-1" id="' + propertyName + j + "_-1"  +'"><label for="' + propertyName +  j+'_-1' + "_"  + '">Free text:</label> <input disabled type="text" class="other" name="' + propertyName + '_' + j +'"/>​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​<br>';
 					}
 
 				}
@@ -164,7 +164,7 @@ function generateReport() {
 			var tempValue = "";
 			//If radio button is free text add free text value
 			if (selectedValue == "-1") {
-				tempValue = $(":nth-child(2) > input[name='other']", current).val();
+				tempValue = $(":nth-child(2) > input[type='text'][class='other']", current).val();
 			}
 			else if (selectedValue == "-2") {
 				tempValue = $('label[for="' + selectedID + '"]').text();
@@ -193,5 +193,23 @@ function generateReport() {
   $('#generated-report').html(report);
 };
 
-
+function changeRadioButton(radioButton) {
+	console.log("hi");
+  var itemClass = $(radioButton).attr('class');
+  var itemName = $(radioButton).attr('name');
+  console.log(itemClass);
+  console.log(itemName)
+  $('input[type=text][name="' + itemName + '"]').each(function() {
+  	console.log(this);
+  	var textClass = $(this).attr('class');
+  	if (textClass === itemClass) {
+  		$(this).prop('disabled', false);
+  	}
+  	else {
+  		$(this).prop('disabled', true);
+  		$(this).val("");
+  	}
+  })
+  
+}
 
