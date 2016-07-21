@@ -71,6 +71,7 @@ label {
   line-height: 100%;
   font-size: 11px;
   font-weight: bold;
+  width: 600px;
 }
 
 #generated-report td {
@@ -78,6 +79,6 @@ label {
 }
 
 #generated-report tr td:first-child{
-    width:25%;
+    width:250px;
 }
 
