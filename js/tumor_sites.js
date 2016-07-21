@@ -64,6 +64,7 @@ database.ref('/tumor_types/' + QueryString.id).once('value').then(function(snaps
 			//Add options for each property
 			if (propertyOptions != null) {
 				for (j=0; j< propertyOptions.length; j++) {
+
 					//Get option information
 					var option = propertyOptions[j];
 					var optionName = option.name;
@@ -75,6 +76,8 @@ database.ref('/tumor_types/' + QueryString.id).once('value').then(function(snaps
 						}
 						//Add option name and description for the group
 						tumorFormHTML += '<p>' + optionName + optionDescription + '</p>';
+						tumorFormHTML += '<input name="' + propertyName + '_' + j +  '"type="radio" checked="checked"  value="-2" id="' + propertyName + j + "_-2"  +'"><label for="' + propertyName +  j + '_-2'  + '"><strong>?????YOU SKIPPED THIS!!!!!</strong></label><br>';
+
 						for (k=0; k< optionGroup.length; k++) {
 							//Get the sub otions in the group information
 							var subOption = optionGroup[k];
@@ -105,11 +108,12 @@ database.ref('/tumor_types/' + QueryString.id).once('value').then(function(snaps
 							}
 						}
 						//Add Free text option
-						tumorFormHTML += '<input name="' + propertyName + '_' + j +  '"type="radio" checked="checked"  required value="-1" id="' + propertyName + j + "_-1"  +'"><label for="' + propertyName +  '_-1' + "_" + k  + '">Free text:</label> <input type="text" name="other" />​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​<br>';
+						tumorFormHTML += '<input name="' + propertyName + '_' + j +  '"type="radio"   required value="-1" id="' + propertyName + j + "_-1"  +'"><label for="' + propertyName + j+ '_-1' + "_"  + '">Free text:</label> <input type="text" name="other" />​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​<br>';
 					}
 					//Add Free text option for forms with no options.
 					else {
-						tumorFormHTML += '<input name="' + propertyName + '_' + j +  '"type="radio" checked="checked"  required value="-1" id="' + propertyName + j + "_-1"  +'"><label for="' + propertyName +  '_-1' + "_" + k  + '">Free text:</label> <input type="text" name="other" />​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​<br>';
+						tumorFormHTML += '<input name="' + propertyName + '_' + j +  '"type="radio" checked="checked"  value="-2" id="' + propertyName + j + "_-2"  +'"><label for="' + propertyName +  j + '_-2'  + '">YOU SKIPPED THIS</label><br>';
+						tumorFormHTML += '<input name="' + propertyName + '_' + j +  '"type="radio"   required value="-1" id="' + propertyName + j + "_-1"  +'"><label for="' + propertyName +  j+'_-1' + "_"  + '">Free text:</label> <input type="text" name="other" />​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​<br>';
 					}
 
 				}
@@ -161,6 +165,9 @@ function generateReport() {
 			//If radio button is free text add free text value
 			if (selectedValue == "-1") {
 				tempValue = $(":nth-child(2) > input[name='other']", current).val();
+			}
+			else if (selectedValue == "-2") {
+				tempValue = $('label[for="' + selectedID + '"]').text();
 			}
 			//Else add radio button text and any additoinal input texts
 			else{
