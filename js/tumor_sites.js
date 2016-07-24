@@ -181,15 +181,19 @@ function generateReport() {
 				if (tempValue.indexOf('[')!=-1) {
 					tempValue = tempValue.substr(0, tempValue.indexOf('['));
 				}
+				var count = 0;
 				var additionalInputs = "";
 				($(":nth-child(2) > [class='" + selectedClass + "']", current)).each(function() {
 					if ($(this).attr('type') !== 'radio') {
-						additionalInputs += ", "
+						if (count!=0 || tempValue.replace(/ /g,'') != ""){
+							additionalInputs += ", "
+						}
 						additionalInputs += $(this).val();
 						if ($(this).attr('type') === 'text') {
 							var labelId = $(this).attr("id");
 							additionalInputs += "" + $("label[for='" + labelId + "']").text();
 						}
+						count++;
 					}
 				});
 				tempValue = tempValue + additionalInputs;
