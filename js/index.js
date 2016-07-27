@@ -26,7 +26,8 @@ database.ref('/tumor_types/').once('value').then(function(snapshot) {
     var tumorType = tumorTypes[i];
     var tumorName = tumorType.name;
     var tumorProperties = tumorType.properties;
-    var tumorDisplayName = tumorName;
+    var optional = tumorType.optional;
+    var tumorDisplayName = optional ? tumorName + " (optional)" : tumorName;
     var organGroup = tumorType.organ_group;
 
     //Add coming soon remark to unimplemented tumor types
