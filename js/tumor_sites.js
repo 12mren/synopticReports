@@ -1,5 +1,7 @@
 var tumorProperties = {};
 var tumorName = "";
+var reportForm = '<button id="generate-report-button" class="btn btn-primary" onclick="return generateReport();"">Generate Report</button><p>The text will appear below. Cut and paste into your document.</p><p>To resubmit form, change answers above and re-click button. If you refresh the page, ALL YOUR INPUT WILL DISAPPEAR.</p>';
+
 //Get the parameters passed into the URL
 
 var QueryString = function () {
@@ -127,7 +129,7 @@ database.ref('/tumor_types/' + QueryString.id).once('value').then(function(snaps
 			tumorFormHTML += '</td></tr>';
 	  }
 	  //Close table and add generate button and instructions
-	  tumorFormHTML += '</table><button id="generate-report-button" class="btn btn-primary" onclick="return generateReport();"">Generate Report</button><p>The text will appear below. Cut and paste into your document.</p><p>To resubmit form, change answers above and re-click button. If you refresh the page, ALL YOUR INPUT WILL DISAPPEAR.</p>';
+	  tumorFormHTML += '</table>' + reportForm;
 	}
 	//Add message for tumor types that have not been implemented yet.
 	else {
@@ -153,10 +155,10 @@ function generateReport() {
 		//Grab label, add | character, and remove description (content following :)
 		var label = $(':nth-child(1)', this).html();
 		if (label.indexOf('[')!=-1){
-			label = '|' + label.substr(label.indexOf(' '), label.indexOf('[')-4) + ":";
+			label = '|' + label.substring(label.indexOf(' '), label.indexOf('[')-1) + ":";
 		}
 		else {
-			label = '|' + label.substr(label.indexOf(' '), label.length+1) + ':';
+			label = '|' + label.substring(label.indexOf(' '), label.length+1) + ':';
 		}
 		var value = "";
 		var current = this;
