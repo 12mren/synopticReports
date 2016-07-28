@@ -164,6 +164,7 @@ function generateReport() {
 		var current = this;
 
 		//Get selected radio buttons for row
+		var radioButtonGroup = 0;
 		var selected = $(':nth-child(2) > input:radio:checked', this).each(function() {
 			//Get radio button information
 			var selectedID = $(this).attr( "id");
@@ -172,7 +173,8 @@ function generateReport() {
 			var tempValue = "";
 			//If radio button is free text add free text value
 			if (selectedValue == "-1") {
-				tempValue = $(":nth-child(2) > input[type='text'][class='other']", current).val();
+				var input = $(":nth-child(2) > input[type='text'][class='other']", current).get(radioButtonGroup);
+				tempValue = $(input).val();
 			}
 			else if (selectedValue == "-2") {
 				tempValue = $('label[for="' + selectedID + '"]').text();
@@ -181,7 +183,7 @@ function generateReport() {
 			else{
 				tempValue = $('label[for="' + selectedID + '"]').text();
 				if (tempValue.indexOf('[')!=-1) {
-					tempValue = tempValue.substr(0, tempValue.indexOf('['));
+					tempValue = tempValue.substring(0, tempValue.indexOf('['));
 				}
 				var count = 0;
 				var additionalInputs = "";
@@ -202,6 +204,7 @@ function generateReport() {
 
 			}
 			value += tempValue + " ";
+			radioButtonGroup ++;
 		});
 		
 		//Add line to report
