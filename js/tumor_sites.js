@@ -1,8 +1,6 @@
 var tumorProperties = {};
 var tumorName = "";
 var reportForm = '<button id="generate-report-button" class="btn btn-primary" onclick="return generateReport();"">Generate Report</button><p>The text will appear below. Cut and paste into your document.</p><p>To resubmit form, change answers above and re-click button. If you refresh the page, ALL YOUR INPUT WILL DISAPPEAR.</p>';
-var longestPropertyName = 0;
-var totalLength = 60;
 
 //Get the parameters passed into the URL
 
@@ -59,9 +57,6 @@ database.ref('/tumor_types/' + QueryString.id).once('value').then(function(snaps
 	  	//Get property information
 			var property = tumorProperties[i];
 			var propertyName = property.name;
-			if (propertyName.length > longestPropertyName) {
-				longestPropertyName = propertyName.length;
-			}
 			var propertyDescription = property.description!=null ? " [" + property.description + "]" : "";
 			var propertyOptions = property.options;
 
@@ -153,17 +148,7 @@ database.ref('/tumor_types/' + QueryString.id).once('value').then(function(snaps
 //Generate report.
 function generateReport() {
 	//Add header
-	var columnLength = totalLength - longestPropertyName + 1;
-	var headerTitle = "| TUMOR SUMMARY:"
-	var report = "<table><tr><td>" + headerTitle;
-	for (i=0; i< columnLength - headerTitle.length; i++) {
-		report += "_";
-	}
-	report += "</td><td>" + tumorName;
-	for (i=0; i<columnLength - tumorName.length; i++) {
-		report += "_"
-	}
-	report += "</td></tr>";
+	var report = "<table><tr><td>| TUMOR SUMMARY:</td><td>" + tumorName + "</td></tr>";
 
 	//Loop over properties (rows of table)
 	$('#tumor-form > tbody  > tr').each(function() {
