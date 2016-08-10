@@ -306,8 +306,22 @@ function generateReportTabs() {
 		else {
 			while (value.length > longestReportLengthTabs - longestPropertyName - 1) {
 				if (value[longestReportLengthTabs - longestPropertyName - 1] != " ") {
-					report += value.substring(0, longestReportLengthTabs - longestPropertyName - 1) + "-</p>";
-					value = value.substring(longestReportLengthTabs - longestPropertyName -1 , value.length);
+					var index = longestReportLengthTabs - longestPropertyName - 1;
+					for (i = index; i>=0; i--) {
+						if (value[i] == " ") {
+							index = i;
+							break;
+						}
+					}
+					if (index ==longestReportLengthTabs - longestPropertyName - 1) {
+						report += value.substring(0, index) + "-</p>";
+						value = value.substring(index-1 , value.length);
+					}
+					else {
+						report += value.substring(0, index) + " </p>";
+						value = value.substring(index +1, value.length);
+					}
+					
 				}
 				else {
 					report += value.substring(0, longestReportLengthTabs - longestPropertyName - 1) + " </p>";
