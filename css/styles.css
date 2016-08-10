@@ -16,6 +16,14 @@ body {
   width: 100%;
 }
 
+.synoptic-reports #instructions {
+  text-align: left;
+}
+
+.synoptic-reports #no-report {
+  text-align: left;
+}
+
 .synoptic-reports td {
   vertical-align: top;
 }
@@ -88,4 +96,20 @@ label {
     white-space: nowrap;
     padding-right: 5px;
 }
+
+#generated-report-tabs {
+  line-height: 100%;
+  font-size: 14.5px; /*11pt font in Word*/
+  font-family: monospace;
+  font-weight: bold;
+  text-align: left;
+  white-space:pre;
+}
+
+#generated-report-tabs p {
+  margin: 0;
+}
+
+
+
 

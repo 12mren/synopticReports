@@ -53,20 +53,6 @@ database.ref('/tumor_types/').once('value').then(function(snapshot) {
         tumorTypeGridHTML[organGroup] = [htmlCell];
       }
     }
-    // if (tumorName[0]!=previousLetter) {
-    //     letterCount += 1;
-    //     previousLetter = tumorName[0];
-    //     if (letterCount!=1) {
-    //         tumorTypeGridHTML += '</div>';
-    //         //Add four columns per row.
-    //         if (letterCount%4 == 1) {
-    //             tumorTypeGridHTML += '</div><div class="row">'; 
-    //         }
-    //         tumorTypeGridHTML += '<div class="col-md-3">';
-    //     }
-    //     tumorTypeGridHTML +=  previousLetter;
-    // }
-    // tumorTypeGridHTML += '<div class="row"><div class="col-md-12"><a href="tumor_sites.html?id='+i+'">' + tumorDisplayName + '</a></div></div>'
 
   }
   //Add result to html

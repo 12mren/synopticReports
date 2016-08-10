@@ -57,7 +57,22 @@
   <div class="container">
     <div class="synoptic-reports">
       <div id="tumor-type"></div>
-      <div id="generated-report"></div>
+      <div id="instructions" style="display:none;">
+        <button id="generate-report-button" class="btn btn-primary" onclick="return generateReport();">Generate Report Table</button>
+        <button id="generate-report-tabs" class="btn btn-primary" onclick="return generateReportTabs();">Generate Report Tabs</button>
+        <p>The text will appear below. Cut and paste into your document.</p>
+        <p>To resubmit form, change answers above and re-click button. If you refresh the page, ALL YOUR INPUT WILL DISAPPEAR.</p>
+        <p>In Word, if you want to make the font of the summary match the font of the document that you are pasting it into, simply click on the clipboard in the lower right hand corner immediately after pasting the summary and select “Match Destination Formatting”.</p>
+        <p>The “|” at the beginning of each line is to facilitate free text searches.</p>
+        <p>The “Stage” will not format correctly unless a selection is made in all 4 sections (prefix, T, N and M), including the prefix section (select “no prefix”).</p>
+      </div>
+      <div id="no-report" style="display:none;">
+        <p>This tumor type is not currently available.</p>
+      </div>
+      <div id="generated-report">
+      </div>
+      <div id="generated-report-tabs">
+      </div>
     </div>
   </div>
 
