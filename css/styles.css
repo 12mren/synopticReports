@@ -19,6 +19,9 @@ body {
 .synoptic-reports #instructions {
   text-align: left;
 }
+.synoptic-reports #instructions button{
+  margin-right: 10px;
+}
 
 .synoptic-reports #no-report {
   text-align: left;
@@ -71,7 +74,7 @@ hr {
   margin-top: 50px;
 }
 
-#tumor-type {
+#tumor-type, #tumor-name {
   text-align: left;
 }
 
@@ -80,12 +83,13 @@ label {
     display: inline !important;
 }
 
-#generated-report {
+#generated-report{
   line-height: 100%;
   font-size: 14.5px; /*11pt font in Word*/
   font-family: "Arial";
   font-weight: bold;
   width: 600px;
+  margin-bottom: 30px;
 }
 
 #generated-report td {
@@ -97,19 +101,36 @@ label {
     padding-right: 5px;
 }
 
-#generated-report-tabs {
+#generated-report-space {
   line-height: 100%;
   font-size: 14.5px; /*11pt font in Word*/
   font-family: monospace;
   font-weight: bold;
   text-align: left;
   white-space:pre;
+  margin-bottom: 30px;
 }
 
-#generated-report-tabs p {
+#generated-report-space p, #generated-report-two-line p {
   margin: 0;
 }
 
+#generated-report-two-line {
+  white-space:pre;
+  text-align: left;
+  line-height: 100%;
+  font-size: 14.5px; /*11pt font in Word*/
+  font-family: "Arial";
+  font-weight: bold;
+  margin-bottom: 30px;
+}
 
+#header {
+  text-align: left;
+}
+
+.tab-cell {
+  width: 5px;
+}
 
 
