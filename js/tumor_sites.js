@@ -1,4 +1,3 @@
-var tumorProperties = {};
 var tumorName = "";
 var reportHeader = "| TUMOR SUMMARY:";
 var longestPropertyName = reportHeader.length;
@@ -56,7 +55,7 @@ database.ref('/tumor_types/' + QueryString.id).once('value').then(function(snaps
   }
   else {
 	  tumorName = tumorType.name;
-	  tumorProperties = tumorType.properties;
+	  var tumorProperties = tumorType.properties;
 	  
 	  //Add form elements based on tumor properties
 	  if (tumorProperties!=null){
@@ -121,9 +120,13 @@ function generateTumorFormHTML(tumorProperties) {
 					if (j!=0) {
 						tumorFormHTML += "<br><br>";
 					}
+					var type = "radio";
+					if (option.canSelectMultiple) {
+						type = "checkbox";
+					}
 					//Add option name and description for the group
 					tumorFormHTML += '<p>' + '<span class="name">' +  optionName + '</span><span class="description">' + optionDescription + '</span></p>';
-					tumorFormHTML += '<input onchange="changeRadioButton(this);" name="' + propertyName + '_' + j +  '"type="radio" checked="checked"  value="-2" id="' + propertyName + j + "_-2"  +'"><label for="' + propertyName +  j + '_-2'  + '" class="skip-label">' + skipLabel + '</label><br>';
+					tumorFormHTML += '<input onchange="toggleTextBox(this);" name="' + propertyName + '_' + j +  '"type="' + type + '"checked="checked"  value="-2" id="' + propertyName + j + "_-2"  +'"><label for="' + propertyName +  j + '_-2'  + '" class="skip-label">' + skipLabel + '</label><br>';
 
 					for (k=0; k< optionGroup.length; k++) {
 						//Get the sub otions in the group information
@@ -135,7 +138,7 @@ function generateTumorFormHTML(tumorProperties) {
 
 						//Add radio button for suboption
 						if (inputs == null) {
-							tumorFormHTML += '<input onchange="changeRadioButton(this);" class="' + subOptionName + '" name ="' + propertyName + '_' + j + '"type="radio" id="' + propertyName + "_" + j + "_" + k + '"><label for="' + propertyName + "_" + j + "_" + k + '"><span class="name">' + subOptionName  + '</span><span class="description">' + subOptionDescription+'</span></label><br>';
+							tumorFormHTML += '<input onchange="toggleTextBox(this);" class="' + subOptionName + '" name ="' + propertyName + '_' + j + '"type="' + type + '" id="' + propertyName + "_" + j + "_" + k + '"><label for="' + propertyName + "_" + j + "_" + k + '"><span class="name">' + subOptionName  + '</span><span class="description">' + subOptionDescription+'</span></label><br>';
 						}
 
 						//If additional text input is required for suboption, add it
@@ -156,17 +159,17 @@ function generateTumorFormHTML(tumorProperties) {
 								}
 								count++;
 							}
-							tumorFormHTML += '<input onchange="changeRadioButton(this);" class="' + subOptionName + '"name="' + propertyName + '_' + j +  '" type="radio" id="' + string_identifier + '"><label for="' + string_identifier + '"><span class="name">' + subOptionName  + '</span><span class="description">' + subOptionDescription+'</span></label>' + inputs_string + '<br>';
+							tumorFormHTML += '<input onchange="toggleTextBox(this);" class="' + subOptionName + '"name="' + propertyName + '_' + j +  '"type="' + type + '" id="' + string_identifier + '"><label for="' + string_identifier + '"><span class="name">' + subOptionName  + '</span><span class="description">' + subOptionDescription+'</span></label>' + inputs_string + '<br>';
 
 						}
 					}
 					//Add Free text option
-					tumorFormHTML += '<input class="other" onchange="changeRadioButton(this);" name="' + propertyName + '_' + j +  '"type="radio"   required value="-1" id="' + propertyName + j + "_-1"  +'"><label for="' + propertyName + j+ '_-1' + "_"  + '">' + freeTextLabel + '</label> <input name="' + propertyName + '_' + j + '" class="other" disabled type="text"  />​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​<br>';
+					tumorFormHTML += '<input class="other" onchange="toggleTextBox(this);" name="' + propertyName + '_' + j +  '"type="' + type + '"   required value="-1" id="' + propertyName + j + "_-1"  +'"><label for="' + propertyName + j+ '_-1' + "_"  + '">' + freeTextLabel + '</label> <input name="' + propertyName + '_' + j + '" class="other" disabled type="text"  />​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​<br>';
 				}
 				//Add Free text option for forms with no options.
 				else {
-					tumorFormHTML += '<input onchange="changeRadioButton(this);" name="' + propertyName + '_' + j +  '"type="radio" checked="checked"  value="-2" id="' + propertyName + j + "_-2"  +'"><label for="' + propertyName +  j + '_-2'  + '" class="skip-label">' + skipLabel +'</label><br>';
-					tumorFormHTML += '<input class="other" onchange="changeRadioButton(this);" name="' + propertyName + '_' + j +  '"type="radio"   required value="-1" id="' + propertyName + j + "_-1"  +'"><label for="' + propertyName +  j+'_-1' + "_"  + '">' + freeTextLabel + '</label> <input disabled type="text" class="other" name="' + propertyName + '_' + j +'"/>​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​<br>';
+					tumorFormHTML += '<input onchange="toggleTextBox(this);" name="' + propertyName + '_' + j +  '"type="' + type + '" checked="checked"  value="-2" id="' + propertyName + j + "_-2"  +'"><label for="' + propertyName +  j + '_-2'  + '" class="skip-label">' + skipLabel +'</label><br>';
+					tumorFormHTML += '<input class="other" onchange="toggleTextBox(this);" name="' + propertyName + '_' + j +  '"type="' + type + '"   required value="-1" id="' + propertyName + j + "_-1"  +'"><label for="' + propertyName +  j+'_-1' + "_"  + '">' + freeTextLabel + '</label> <input disabled type="text" class="other" name="' + propertyName + '_' + j +'"/>​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​<br>';
 				}
 
 			}
@@ -367,23 +370,32 @@ function getPropertyLabel(tableRow) {
 function getPropertyValue(tableRow) {
 	var value = "";
 
-	//Get selected radio buttons for row
-	var radioButtonGroup = 0;
-	var selected = $(':nth-child(2) > input:radio:checked', tableRow).each(function() {
-		//Get radio button information
+	//Get selected radio buttons/check boxes for row
+	var buttonGroup = 0;
+	var previousButtonGroup = "";
+	var countButtons = 0;
+	var selected = $(':nth-child(2) > input:checked', tableRow).each(function() {
+		//Get radio button/check box information
 		var selectedID = $(this).attr( "id");
 		var selectedClass = $(this).attr("class");
 		var selectedValue = $(this).attr("value");
+		var selectedName = $(this).attr("name");
 		var tempValue = "";
-		//If radio button is free text add free text value
+		if (countButtons!=0 && previousButtonGroup === selectedName) {
+			value += ", ";
+		}
+		else if (countButtons!=0) {
+			value += " ";
+		}
+		//If radio button/checkbox is free text add free text value
 		if (selectedValue == "-1") {
-			var input = $(":nth-child(2) > input[type='text'][class='other']", tableRow).get(radioButtonGroup);
+			var input = $(":nth-child(2) > input[type='text'][class='other']", tableRow).get(buttonGroup);
 			tempValue = $(input).val().trim();
 		}
 		else if (selectedValue == "-2") {
 			tempValue = $('label[for="' + selectedID + '"]').text().trim();
 		}
-		//Else add radio button text and any additoinal input texts
+		//Else add radio button/checkbox text and any additoinal input texts
 		else{
 			tempValue = $('label[for="' + selectedID + '"]').text().trim();
 			if (tempValue.indexOf('[')!=-1) {
@@ -392,7 +404,7 @@ function getPropertyValue(tableRow) {
 			var count = 0;
 			var additionalInputs = "";
 			($(":nth-child(2) > [class='" + selectedClass + "']", tableRow)).each(function() {
-				if ($(this).attr('type') !== 'radio') {
+				if ($(this).attr('type') !== 'radio' && $(this).attr('type')!== 'checkbox') {
 					var addedComma = false;
 					var additionalInput = $(this).val().trim();
 					if (additionalInput.replace(/ /g, '') != "") {
@@ -419,24 +431,32 @@ function getPropertyValue(tableRow) {
 			tempValue = tempValue + additionalInputs;
 
 		}
-		value += tempValue + " ";
-		radioButtonGroup ++;
+		value += tempValue;
+		if (previousButtonGroup !== selectedName && countButtons!=0) {
+			console.log(previousButtonGroup);
+			console.log(selectedName);
+			buttonGroup ++;
+		}
+		previousButtonGroup = selectedName;
+		countButtons ++;
+
 	});
 	return value.trim();
 }
 
-//Disable/enable text options on radio button change
-function changeRadioButton(radioButton) {
-  var itemClass = $(radioButton).attr('class');
-  var itemName = $(radioButton).attr('name');
+//Disable/enable text options on radio button/checkbox change
+function toggleTextBox(buttonOrBox) {
+  var itemName = $(buttonOrBox).attr('name');
   $('input[type=text][name="' + itemName + '"], select[name="' + itemName + '"]').each(function() {
   	var textClass = $(this).attr('class');
-  	if (textClass === itemClass) {
+  	var assosciatedCheckOrRadio = $('input[type=radio][name="' + itemName + '"][class="' + textClass + '"], input[type=checkbox][name="' + itemName + '"][class="' + textClass + '"]').first();
+  	if ($(assosciatedCheckOrRadio).is(':checked')) {
   		$(this).prop('disabled', false);
   	}
   	else {
   		$(this).prop('disabled', true);
   	}
+  	
   })
   
 }
