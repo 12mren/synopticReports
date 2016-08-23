@@ -106,7 +106,7 @@ function generateTumorFormHTML(tumorProperties) {
 		var propertyOptions = property.options;
 
 		//Add property title and description to web page
-		tumorFormHTML += '<tr><td>' + (i+1) + '. ' + propertyName +  '<span class="description">' +propertyDescription +'</span></td><td class="form-elements">';
+		tumorFormHTML += '<tr><td>' + (i+1) + '. <span class="name">' + propertyName +  '</span><span class="description">' +propertyDescription +'</span></td><td class="form-elements">';
 
 		//Add options for each property
 		if (propertyOptions != null) {
@@ -122,7 +122,7 @@ function generateTumorFormHTML(tumorProperties) {
 						tumorFormHTML += "<br><br>";
 					}
 					//Add option name and description for the group
-					tumorFormHTML += '<p>' + optionName + '<span class="description">' + optionDescription + '</span></p>';
+					tumorFormHTML += '<p>' + '<span class="name">' +  optionName + '</span><span class="description">' + optionDescription + '</span></p>';
 					tumorFormHTML += '<input onchange="changeRadioButton(this);" name="' + propertyName + '_' + j +  '"type="radio" checked="checked"  value="-2" id="' + propertyName + j + "_-2"  +'"><label for="' + propertyName +  j + '_-2'  + '" class="skip-label">' + skipLabel + '</label><br>';
 
 					for (k=0; k< optionGroup.length; k++) {
@@ -135,7 +135,7 @@ function generateTumorFormHTML(tumorProperties) {
 
 						//Add radio button for suboption
 						if (inputs == null) {
-							tumorFormHTML += '<input onchange="changeRadioButton(this);" class="' + subOptionName + '" name ="' + propertyName + '_' + j + '"type="radio" id="' + propertyName + "_" + j + "_" + k + '"><label for="' + propertyName + "_" + j + "_" + k + '">' + subOptionName  + '<span class="description">' + subOptionDescription+'</span></label><br>';
+							tumorFormHTML += '<input onchange="changeRadioButton(this);" class="' + subOptionName + '" name ="' + propertyName + '_' + j + '"type="radio" id="' + propertyName + "_" + j + "_" + k + '"><label for="' + propertyName + "_" + j + "_" + k + '"><span class="name">' + subOptionName  + '</span><span class="description">' + subOptionDescription+'</span></label><br>';
 						}
 
 						//If additional text input is required for suboption, add it
@@ -156,7 +156,7 @@ function generateTumorFormHTML(tumorProperties) {
 								}
 								count++;
 							}
-							tumorFormHTML += '<input onchange="changeRadioButton(this);" class="' + subOptionName + '"name="' + propertyName + '_' + j +  '" type="radio" id="' + string_identifier + '"><label for="' + string_identifier + '">' + subOptionName  + '<span class="description">' + subOptionDescription+'</span></label>' + inputs_string + '<br>';
+							tumorFormHTML += '<input onchange="changeRadioButton(this);" class="' + subOptionName + '"name="' + propertyName + '_' + j +  '" type="radio" id="' + string_identifier + '"><label for="' + string_identifier + '"><span class="name">' + subOptionName  + '</span><span class="description">' + subOptionDescription+'</span></label>' + inputs_string + '<br>';
 
 						}
 					}
@@ -338,13 +338,8 @@ function generateReportTwoLines() {
 //Get the label of a property in the tumor form (ex/ "| Procedure:"" )
 function getPropertyLabel(tableRow) {
 	//Grab label, add | character, and remove description (content following :)
-	var label = $(':nth-child(1)', tableRow).html();
-	if (label.indexOf('<')!=-1){
-		label = '|' + label.substring(label.indexOf(' '), label.indexOf('<')) + ":";
-	}
-	else {
-		label = '|' + label.substring(label.indexOf(' '), label.length+1) + ':';
-	}
+	var label = $(':nth-child(1) > span[class="name"]', tableRow).html();
+	label = '| ' + label + ":";
 	return label;
 }
 
