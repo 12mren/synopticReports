@@ -190,29 +190,44 @@ function generateReport(isBiopsy) {
 	$('#tumor-form > tbody  > tr').each(function() {
 		//Grab label, add | character, and remove description (content following :)
 		var label = getPropertyLabel(this);
-		var value = getPropertyValue(this);
+		var values = getPropertyValue(this);
 
 		//Save location and procedure
 		if (label === "| Location:") {
-			location = value;
+			location = values;
 		}
 
 		if (label === "| Procedure:") {
-			procedure = value;
+			procedure = values;
 		}
 		
 		//Add line to report
-		if (!isBiopsy || (label != "| Location:" && label != "| Procedure:")) {
-			//Add line to report
-			if (value!="") {
-				if (isBiopsy) {
-				report+="<tr><td class='report-indent'></td><td class='report-label'>" + label + "</td><td>" + value + "</td></tr>";
+		for (i=0; i< values.length; i++){
+			var value = values[i];
+			if (!isBiopsy || (label != "| Location:" && label != "| Procedure:")) {
+				//Add line to report
+				if (value!="") {
+					if (isBiopsy) {
+						if (i==0){
+							report+="<tr><td class='report-indent'></td><td class='report-label'>" + label + "</td><td>" + value + "</td></tr>";
+						}
+						else {
+							report+="<tr><td class='report-indent'></td><td class='report-label'></td><td>" + value + "</td></tr>";
+						}
+					}
+					else {
+						if (i==0){
+							report+="<tr><td class='report-label'>" + label + "</td><td>" + value + "</td></tr>";
+						}
+						else {
+							report+="<tr><td class='report-label'></td><td>" + value + "</td></tr>";
+						}
+						
+					}
 				}
-				else {
-					report+="<tr><td class='report-label'>" + label + "</td><td>" + value + "</td></tr>";
-				}
-			}
-		}		
+			}		
+		}
+		
 	});
 
 	if (isBiopsy) {
@@ -221,8 +236,22 @@ function generateReport(isBiopsy) {
 	report += "</table>";
 
 	//Add header
+	var locationString = "";
+	var procedureString = "";
+	for (i=0; i<location.length; i++) {
+		if (i!=0) {
+			locationString += ", "
+		}
+		locationString += location[i];
+	}
+	for (i=0; i<procedure.length; i++) {
+		if (i!=0) {
+			procedureString += ", "
+		}
+		procedureString += procedure[i];
+	}
 	if (isBiopsy){
-		report = "<p>" +  tumorName + ": " + location +", " + procedure + "</p><table>" + report;
+		report = "<p>|" +  tumorName + ": " + locationString +", " + procedureString + "</p><table>" + report;
 	}
 	else {
 		report = "<table><tr><td>| TUMOR SUMMARY:</td><td>" + tumorName + "</td></tr>" + report;
@@ -242,31 +271,49 @@ function generateReportSpace(isBiopsy) {
 	//Loop over properties (rows of table)
 	$('#tumor-form > tbody  > tr').each(function() {
 		var label = getPropertyLabel(this);
-		var value = getPropertyValue(this);
+		var values = getPropertyValue(this);
 
 		//Save location and procedure
 		if (label === "| Location:") {
-			location = value;
+			location = values;
 		}
 
 		if (label === "| Procedure:") {
-			procedure = value;
+			procedure = values;
 		}
 		
 		//Add line to report
-		if (value!=""){
-			if (!isBiopsy || (label != "| Location:" && label != "| Procedure:")) {
-				report += generateSpaceReportLine(label, value, isBiopsy);
+		for (i=0; i<values.length; i++) {
+			var value = values[i];
+			if (value!=""){
+				if (!isBiopsy || (label != "| Location:" && label != "| Procedure:")) {
+					report += generateSpaceReportLine(label, value, isBiopsy, i);
+				}
 			}
 		}
+		
 		
 	});
 	if (isBiopsy) {
 		report+= "<p>" + " ".repeat(tabLength) + "||</p>"
 	}
 	//Add header
+	var locationString = "";
+	var procedureString = "";
+	for (i=0; i<location.length; i++) {
+		if (i!=0) {
+			locationString += ", "
+		}
+		locationString += location[i];
+	}
+	for (i=0; i<procedure.length; i++) {
+		if (i!=0) {
+			procedureString += ", "
+		}
+		procedureString += procedure[i];
+	}
 	if (isBiopsy) {
-		report = "<p>| " + tumorName + ": " + location +", " + procedure + "</p>" + report;
+		report = "<p>| " + tumorName + ": " + locationString +", " + procedureString + "</p>" + report;
 	}
 	else {
 		report = "<p>" + reportHeader + " ".repeat(longestPropertyName + 1 - reportHeader.length) + tumorName + "</p>" + report; 
@@ -274,13 +321,19 @@ function generateReportSpace(isBiopsy) {
   $('#generated-report-space').html(report);
 };
 
-function generateSpaceReportLine(label, value, isBiopsy){
+function generateSpaceReportLine(label, value, isBiopsy, lineNum){
 	var report = "";
 	if (isBiopsy) {
-		report+="<p>" + " ".repeat(tabLength) + label + " ".repeat(longestPropertyName + 1 - label.length);
+		report+="<p>" + " ".repeat(tabLength);
 	}
 	else {
-		report+="<p>" + label + " ".repeat(longestPropertyName + 1 - label.length);
+		report+="<p>";
+	}
+	if (lineNum == 0){
+		report += label + " ".repeat(longestPropertyName + 1 - label.length);
+	}
+	else {
+		report += " ".repeat(longestPropertyName + 1);
 	}
 	if (value.length <= longestReportLengthTabs - longestPropertyName - 1) {
 		report += value + "</p>";
@@ -326,38 +379,47 @@ function generateReportTwoLines() {
 	//Loop over properties (rows of table)
 	$('#tumor-form > tbody  > tr').each(function() {
 		var label = getPropertyLabel(this);
-		var value = getPropertyValue(this);
+		var values = getPropertyValue(this);
 		
 		//Add line to report
-		if (value!=""){
-			report+="<p>" + label + "</p><p>" + " ".repeat(tabLength);
-			if (value.length <= longestReportLengthTabs-tabLength) {
-				report += value + "</p>";
-			}
-			else {
-				while (value.length > longestReportLengthTabs-tabLength) {
-					var foundSpace = false;
-					var index = longestReportLengthTabs-tabLength - 1;
-					for (i = index; i>=0; i--) {
-						if (value[i] == " ") {
-							index = i;
-							foundSpace = true;
-							break;
-						}
-					}
-					if (!foundSpace) {
-						report += value.substring(0, index) + "-</p>";
-						value = value.substring(index-1 , value.length);
-					}
-					else {
-						report += value.substring(0, index) + " </p>";
-						value = value.substring(index +1, value.length);
-					}
-					report += "<p>" + " ".repeat(tabLength);
+		for (j = 0; j< values.length; j++){
+			var value = values[j];
+			if (value!=""){
+				if (j==0){
+					report+="<p>" + label + "</p><p>" + " ".repeat(tabLength);
 				}
-				report += value + "</p>";	
+				else {
+					report+="<p>" + " ".repeat(tabLength);
+				}
+				if (value.length <= longestReportLengthTabs-tabLength) {
+					report += value + "</p>";
+				}
+				else {
+					while (value.length > longestReportLengthTabs-tabLength) {
+						var foundSpace = false;
+						var index = longestReportLengthTabs-tabLength - 1;
+						for (i = index; i>=0; i--) {
+							if (value[i] == " ") {
+								index = i;
+								foundSpace = true;
+								break;
+							}
+						}
+						if (!foundSpace) {
+							report += value.substring(0, index) + "-</p>";
+							value = value.substring(index-1 , value.length);
+						}
+						else {
+							report += value.substring(0, index) + " </p>";
+							value = value.substring(index +1, value.length);
+						}
+						report += "<p>" + " ".repeat(tabLength);
+					}
+					report += value + "</p>";	
+				}
 			}
 		}
+		
 		
 
 	});
@@ -374,6 +436,7 @@ function getPropertyLabel(tableRow) {
 
 //Get the value inputed by the user for a select question
 function getPropertyValue(tableRow) {
+	var values = [];
 	var value = "";
 
 	//Get selected radio buttons/check boxes for row
@@ -388,7 +451,8 @@ function getPropertyValue(tableRow) {
 		var selectedName = $(this).attr("name");
 		var tempValue = "";
 		if (countButtons!=0 && previousButtonGroup === selectedName) {
-			value += ", ";
+			values.push(value.trim());
+			value = "";
 		}
 		else if (countButtons!=0) {
 			value += " ";
@@ -447,7 +511,8 @@ function getPropertyValue(tableRow) {
 		countButtons ++;
 
 	});
-	return value.trim();
+	values.push(value.trim());
+	return values;
 }
 
 //Disable/enable text options on radio button/checkbox change
@@ -462,7 +527,7 @@ function toggleTextBox(buttonOrBox) {
   	else {
   		$(this).prop('disabled', true);
   	}
-  	
+
   })
   
 }
