@@ -180,28 +180,50 @@ function generateTumorFormHTML(tumorProperties) {
 
 //Generate report.
 function generateReport(isBiopsy) {
-	//Add header
-	var report = "<table><tr><td>| TUMOR SUMMARY:</td><td>" + tumorName + "</td></tr>";
-
+	var report = "";
+	var location = "";
+	var procedure = "";
 	//Loop over properties (rows of table)
 	$('#tumor-form > tbody  > tr').each(function() {
 		//Grab label, add | character, and remove description (content following :)
 		var label = getPropertyLabel(this);
 		var value = getPropertyValue(this);
+
+		//Save location and procedure
+		if (label === "| Location:") {
+			location = value;
+		}
+
+		if (label === "| Procedure:") {
+			procedure = value;
+		}
 		
 		//Add line to report
-		if (isBiopsy) {
-			report+="<tr><td class='report-indent'></td><td class='report-label'>" + label + "</td><td>" + value + "</td></tr>";
-		}
-		else {
-			report+="<tr><td class='report-label'>" + label + "</td><td>" + value + "</td></tr>";
-		}
+		if (!isBiopsy || (label != "| Location:" && label != "| Procedure:")) {
+			//Add line to report
+			if (isBiopsy) {
+				report+="<tr><td class='report-indent'></td><td class='report-label'>" + label + "</td><td>" + value + "</td></tr>";
+			}
+			else {
+				report+="<tr><td class='report-label'>" + label + "</td><td>" + value + "</td></tr>";
+			}
+		}		
 	});
+
 	if (isBiopsy) {
 		report += "<tr><td class='report-indent'></td><td class='report-label'>||</td><td></td></tr>";
 	}
-	//Add report to table.
 	report += "</table>";
+
+	//Add header
+	if (isBiopsy){
+		report = "<p>" +  tumorName + ": " + location +", " + procedure + "</p><table>" + report;
+	}
+	else {
+		report = "<table><tr><td>| TUMOR SUMMARY:</td><td>" + tumorName + "</td></tr>" + report;
+	}
+
+	//Add report to table.
   $('#generated-report').html(report);
 };
 
@@ -210,8 +232,6 @@ function generateReport(isBiopsy) {
 function generateReportSpace(isBiopsy) {
 	var location = "";
 	var procedure = "";
-
-	//Add header
 	var report = "";
 	
 	//Loop over properties (rows of table)
@@ -358,30 +378,42 @@ function getPropertyValue(tableRow) {
 		//If radio button is free text add free text value
 		if (selectedValue == "-1") {
 			var input = $(":nth-child(2) > input[type='text'][class='other']", tableRow).get(radioButtonGroup);
-			tempValue = $(input).val();
+			tempValue = $(input).val().trim();
 		}
 		else if (selectedValue == "-2") {
-			tempValue = $('label[for="' + selectedID + '"]').text();
+			tempValue = $('label[for="' + selectedID + '"]').text().trim();
 		}
 		//Else add radio button text and any additoinal input texts
 		else{
-			tempValue = $('label[for="' + selectedID + '"]').text();
+			tempValue = $('label[for="' + selectedID + '"]').text().trim();
 			if (tempValue.indexOf('[')!=-1) {
-				tempValue = tempValue.substring(0, tempValue.indexOf('['));
+				tempValue = tempValue.substring(0, tempValue.indexOf('[')).trim();
 			}
 			var count = 0;
 			var additionalInputs = "";
 			($(":nth-child(2) > [class='" + selectedClass + "']", tableRow)).each(function() {
 				if ($(this).attr('type') !== 'radio') {
-					if (count!=0 || tempValue.replace(/ /g,'') != ""){
-						additionalInputs += ", "
+					var addedComma = false;
+					var additionalInput = $(this).val().trim();
+					if (additionalInput.replace(/ /g, '') != "") {
+						if (count!=0 || tempValue.replace(/ /g,'') != "" ){
+							additionalInputs += ", "
+							addedComma = true;
+						}
+						additionalInputs += additionalInput;
+						count ++;
 					}
-					additionalInputs += $(this).val();
 					if ($(this).attr('type') === 'text') {
 						var labelId = $(this).attr("id");
-						additionalInputs += "" + $("label[for='" + labelId + "']").text();
+						var labelText = $("label[for='" + labelId + "']").text().trim();
+						if (labelText != "" && !addedComma) {
+							additionalInputs += ", " + labelText;
+							addedComma = true;
+						}
+						else {
+							additionalInputs += "" + labelText;
+						}
 					}
-					count++;
 				}
 			});
 			tempValue = tempValue + additionalInputs;
@@ -390,7 +422,7 @@ function getPropertyValue(tableRow) {
 		value += tempValue + " ";
 		radioButtonGroup ++;
 	});
-	return value;
+	return value.trim();
 }
 
 //Disable/enable text options on radio button change

@@ -89,19 +89,21 @@ label {
   font-weight: bold;
   width: 600px;
   margin-bottom: 30px;
+  text-align: left;
 }
 
 #generated-report td {
-  padding: 0px;
+  padding-bottom: 0px;
+  padding-top: 0px;
 }
 
 .report-label{
     white-space: nowrap;
-    padding-right: 5px;
+    padding-right: 5px !important;
 }
 
 .report-indent {
-  width: 5px;
+  width: 50px;
 }
 
 #generated-report-space {
@@ -114,7 +116,7 @@ label {
   margin-bottom: 30px;
 }
 
-#generated-report-space p, #generated-report-two-line p {
+#generated-report p, #generated-report-space p, #generated-report-two-line p {
   margin: 0;
 }
 
