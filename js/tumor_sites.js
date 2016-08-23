@@ -207,6 +207,9 @@ function generateReport(isBiopsy) {
 			if (!isBiopsy || (label != "| Location:" && label != "| Procedure:")) {
 				//Add line to report
 				if (value!="") {
+					if (i!=values.length-1) {
+						value = value + ",";
+					}
 					if (isBiopsy) {
 						if (i==0){
 							report+="<tr><td class='report-indent'></td><td class='report-label'>" + label + "</td><td>" + value + "</td></tr>";
@@ -287,7 +290,7 @@ function generateReportSpace(isBiopsy) {
 			var value = values[i];
 			if (value!=""){
 				if (!isBiopsy || (label != "| Location:" && label != "| Procedure:")) {
-					report += generateSpaceReportLine(label, value, isBiopsy, i);
+					report += generateSpaceReportLine(label, value, isBiopsy, i, values.length);
 				}
 			}
 		}
@@ -321,7 +324,10 @@ function generateReportSpace(isBiopsy) {
   $('#generated-report-space').html(report);
 };
 
-function generateSpaceReportLine(label, value, isBiopsy, lineNum){
+function generateSpaceReportLine(label, value, isBiopsy, lineNum, numLines){
+	if (lineNum!= numLines - 1){
+		value += ",";
+	}
 	var report = "";
 	if (isBiopsy) {
 		report+="<p>" + " ".repeat(tabLength);
@@ -366,6 +372,7 @@ function generateSpaceReportLine(label, value, isBiopsy, lineNum){
 			
 		}
 		report += value + "</p>";
+		
 
 	}
 	return report;
@@ -384,6 +391,9 @@ function generateReportTwoLines() {
 		//Add line to report
 		for (j = 0; j< values.length; j++){
 			var value = values[j];
+			if (j!= values.length-1){
+				value += ",";
+			}
 			if (value!=""){
 				if (j==0){
 					report+="<p>" + label + "</p><p>" + " ".repeat(tabLength);
@@ -416,6 +426,8 @@ function generateReportTwoLines() {
 						report += "<p>" + " ".repeat(tabLength);
 					}
 					report += value + "</p>";	
+
+					
 				}
 			}
 		}
