@@ -204,11 +204,13 @@ function generateReport(isBiopsy) {
 		//Add line to report
 		if (!isBiopsy || (label != "| Location:" && label != "| Procedure:")) {
 			//Add line to report
-			if (isBiopsy) {
+			if (value!="") {
+				if (isBiopsy) {
 				report+="<tr><td class='report-indent'></td><td class='report-label'>" + label + "</td><td>" + value + "</td></tr>";
-			}
-			else {
-				report+="<tr><td class='report-label'>" + label + "</td><td>" + value + "</td></tr>";
+				}
+				else {
+					report+="<tr><td class='report-label'>" + label + "</td><td>" + value + "</td></tr>";
+				}
 			}
 		}		
 	});
