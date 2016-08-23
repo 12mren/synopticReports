@@ -142,6 +142,9 @@ label {
   font-weight: normal;
 }
 
+.skip-label {
+  text-decoration: underline;
+}
 
 
 
