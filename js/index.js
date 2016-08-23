@@ -29,7 +29,7 @@ database.ref('/tumor_types/').once('value').then(function(snapshot) {
     var optional = tumorType.optional;
     var tumorDisplayName = tumorName;
     if (tumorType.biopsy_type!=null) {
-      tumorDisplayName += " biopsy [" + tumorType.biopsy_type + "]";
+      tumorDisplayName += " [" + tumorType.biopsy_type + "]";
     }
     if (optional) {
       tumorDisplayName += " (optional)";

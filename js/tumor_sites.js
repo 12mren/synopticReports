@@ -70,7 +70,7 @@ database.ref('/tumor_types/' + QueryString.id).once('value').then(function(snaps
 		  }
 		  //Add name
 		  if (tumorType.biopsy_type !=null) {
-		  	$('#tumor-name').html(tumorName + " biopsy [" + biopsyType + "]");
+		  	$('#tumor-name').html(tumorName + " [" + biopsyType + "]");
 		  }
 	  	else {
 	  		$('#tumor-name').html(tumorName);
@@ -231,7 +231,7 @@ function generateReportSpace(isBiopsy) {
 	}
 	//Add header
 	if (isBiopsy) {
-		report = "<p>| " + tumorName + " biopsy: " + location +", " + procedure + "</p>" + report;
+		report = "<p>| " + tumorName + ": " + location +", " + procedure + "</p>" + report;
 	}
 	else {
 		report = "<p>" + reportHeader + " ".repeat(longestPropertyName + 1 - reportHeader.length) + tumorName + "</p>" + report; 
