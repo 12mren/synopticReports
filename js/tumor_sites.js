@@ -254,8 +254,10 @@ function generateReportSpace(isBiopsy) {
 		}
 		
 		//Add line to report
-		if (!isBiopsy || (label != "| Location:" && label != "| Procedure:")) {
-			report += generateSpaceReportLine(label, value, isBiopsy);
+		if (value!=""){
+			if (!isBiopsy || (label != "| Location:" && label != "| Procedure:")) {
+				report += generateSpaceReportLine(label, value, isBiopsy);
+			}
 		}
 		
 	});
@@ -327,32 +329,34 @@ function generateReportTwoLines() {
 		var value = getPropertyValue(this);
 		
 		//Add line to report
-		report+="<p>" + label + "</p><p>" + " ".repeat(tabLength);
-		if (value.length <= longestReportLengthTabs-tabLength) {
-			report += value + "</p>";
-		}
-		else {
-			while (value.length > longestReportLengthTabs-tabLength) {
-				var foundSpace = false;
-				var index = longestReportLengthTabs-tabLength - 1;
-				for (i = index; i>=0; i--) {
-					if (value[i] == " ") {
-						index = i;
-						foundSpace = true;
-						break;
-					}
-				}
-				if (!foundSpace) {
-					report += value.substring(0, index) + "-</p>";
-					value = value.substring(index-1 , value.length);
-				}
-				else {
-					report += value.substring(0, index) + " </p>";
-					value = value.substring(index +1, value.length);
-				}
-				report += "<p>" + " ".repeat(tabLength);
+		if (value!=""){
+			report+="<p>" + label + "</p><p>" + " ".repeat(tabLength);
+			if (value.length <= longestReportLengthTabs-tabLength) {
+				report += value + "</p>";
 			}
-			report += value + "</p>";	
+			else {
+				while (value.length > longestReportLengthTabs-tabLength) {
+					var foundSpace = false;
+					var index = longestReportLengthTabs-tabLength - 1;
+					for (i = index; i>=0; i--) {
+						if (value[i] == " ") {
+							index = i;
+							foundSpace = true;
+							break;
+						}
+					}
+					if (!foundSpace) {
+						report += value.substring(0, index) + "-</p>";
+						value = value.substring(index-1 , value.length);
+					}
+					else {
+						report += value.substring(0, index) + " </p>";
+						value = value.substring(index +1, value.length);
+					}
+					report += "<p>" + " ".repeat(tabLength);
+				}
+				report += value + "</p>";	
+			}
 		}
 		
 
