@@ -79,7 +79,6 @@ hr {
 }
 
 label {
-    font-weight: normal !important;
     display: inline !important;
 }
 
@@ -132,5 +131,17 @@ label {
 .tab-cell {
   width: 5px;
 }
+
+#tumor-form label {
+  font-weight: bold;
+}
+
+.description {
+  font-size: 13px;
+  font-style: italic;
+  font-weight: normal;
+}
+
+
 
 
