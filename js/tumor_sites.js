@@ -179,7 +179,7 @@ function generateTumorFormHTML(tumorProperties) {
 
 
 //Generate report.
-function generateReport() {
+function generateReport(isBiopsy) {
 	//Add header
 	var report = "<table><tr><td>| TUMOR SUMMARY:</td><td>" + tumorName + "</td></tr>";
 
@@ -190,8 +190,16 @@ function generateReport() {
 		var value = getPropertyValue(this);
 		
 		//Add line to report
-		report+="<tr><td>" + label + "</td><td>" + value + "</td></tr>";
+		if (isBiopsy) {
+			report+="<tr><td class='report-indent'></td><td class='report-label'>" + label + "</td><td>" + value + "</td></tr>";
+		}
+		else {
+			report+="<tr><td class='report-label'>" + label + "</td><td>" + value + "</td></tr>";
+		}
 	});
+	if (isBiopsy) {
+		report += "<tr><td class='report-indent'></td><td class='report-label'>||</td><td></td></tr>";
+	}
 	//Add report to table.
 	report += "</table>";
   $('#generated-report').html(report);
@@ -331,8 +339,8 @@ function generateReportTwoLines() {
 function getPropertyLabel(tableRow) {
 	//Grab label, add | character, and remove description (content following :)
 	var label = $(':nth-child(1)', tableRow).html();
-	if (label.indexOf('[')!=-1){
-		label = '|' + label.substring(label.indexOf(' '), label.indexOf('[')-1) + ":";
+	if (label.indexOf('<')!=-1){
+		label = '|' + label.substring(label.indexOf(' '), label.indexOf('<')) + ":";
 	}
 	else {
 		label = '|' + label.substring(label.indexOf(' '), label.length+1) + ':';

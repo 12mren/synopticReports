@@ -95,9 +95,13 @@ label {
   padding: 0px;
 }
 
-#generated-report td:first-child{
+.report-label{
     white-space: nowrap;
     padding-right: 5px;
+}
+
+.report-indent {
+  width: 5px;
 }
 
 #generated-report-space {
