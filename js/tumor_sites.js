@@ -518,6 +518,9 @@ function getPropertyValue(tableRow) {
 //Disable/enable text options on radio button/checkbox change
 function toggleTextBox(buttonOrBox) {
   var itemName = $(buttonOrBox).attr('name');
+  var itemValue = $(buttonOrBox).attr('value');
+  var validSelection = false;
+  
   $('input[type=text][name="' + itemName + '"], select[name="' + itemName + '"]').each(function() {
   	var textClass = $(this).attr('class');
   	var assosciatedCheckOrRadio = $('input[type=radio][name="' + itemName + '"][class="' + textClass + '"], input[type=checkbox][name="' + itemName + '"][class="' + textClass + '"]').first();
@@ -528,7 +531,19 @@ function toggleTextBox(buttonOrBox) {
   		$(this).prop('disabled', true);
   	}
 
-  })
+  });
+
+  $('input[type=checkbox][name="' + itemName + '"]').each(function() {
+  	if ($(this).is(':checked') && $(this).attr('value')!=-2){
+  		validSelection = true;
+  		return false;
+  	}
+  });
+
+  if (validSelection && itemValue!=-2) {
+  	$('input[type=checkbox][name="' + itemName + '"][value=-2]').first().attr('checked', false);
+  }
+
   
 }
 
