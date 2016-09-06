@@ -462,6 +462,9 @@ function getPropertyValue(tableRow) {
 		var selectedValue = $(this).attr("value");
 		var selectedName = $(this).attr("name");
 		var tempValue = "";
+		if (previousButtonGroup !== selectedName && countButtons!=0) {
+			buttonGroup ++;
+		}
 		if (countButtons!=0 && previousButtonGroup === selectedName) {
 			values.push(value.trim());
 			value = "";
@@ -514,11 +517,7 @@ function getPropertyValue(tableRow) {
 
 		}
 		value += tempValue;
-		if (previousButtonGroup !== selectedName && countButtons!=0) {
-			console.log(previousButtonGroup);
-			console.log(selectedName);
-			buttonGroup ++;
-		}
+		
 		previousButtonGroup = selectedName;
 		countButtons ++;
 
