@@ -1,0 +1,266 @@
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] CLI Version:  3.2.0
+[debug] Platform:     darwin
+[debug] Node Version: v6.9.1
+[debug] Time:         Thu Dec 01 2016 18:20:04 GMT-0500 (EST)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[warn] ⚠  Deprecation Warning: Firebase Hosting configuration should be moved under "hosting" key.
+[info] Starting Firebase development server...
+[info] 
+[info] Project Directory: /Users/andyrenshaw/Desktop/clonedSynopticReports
+[info] 
+[info] Server listening at: http://localhost:5000
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] CLI Version:  3.2.0
+[debug] Platform:     darwin
+[debug] Node Version: v6.9.1
+[debug] Time:         Fri Dec 02 2016 16:09:13 GMT-0500 (EST)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[warn] ⚠  Deprecation Warning: Firebase Hosting configuration should be moved under "hosting" key.
+[info] Starting Firebase development server...
+[info] 
+[info] Project Directory: /Users/andyrenshaw/Desktop/clonedSynopticReports
+[info] 
+[info] Server listening at: http://localhost:5000
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] CLI Version:  3.2.0
+[debug] Platform:     darwin
+[debug] Node Version: v6.9.1
+[debug] Time:         Fri Dec 02 2016 17:06:01 GMT-0500 (EST)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[warn] ⚠  Deprecation Warning: Firebase Hosting configuration should be moved under "hosting" key.
+[info] Starting Firebase development server...
+[info] 
+[info] Project Directory: /Users/andyrenshaw/Desktop/clonedSynopticReports
+[info] 
+[info] Server listening at: http://localhost:5000
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] CLI Version:  3.2.0
+[debug] Platform:     darwin
+[debug] Node Version: v6.9.1
+[debug] Time:         Sat Dec 03 2016 09:01:13 GMT-0500 (EST)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[warn] ⚠  Deprecation Warning: Firebase Hosting configuration should be moved under "hosting" key.
+[info] Starting Firebase development server...
+[info] 
+[info] Project Directory: /Users/andyrenshaw/Desktop/clonedSynopticReports
+[info] 
+[info] Server listening at: http://localhost:5000
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] CLI Version:  3.2.0
+[debug] Platform:     darwin
+[debug] Node Version: v6.9.1
+[debug] Time:         Sat Dec 03 2016 10:51:40 GMT-0500 (EST)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[warn] ⚠  Deprecation Warning: Firebase Hosting configuration should be moved under "hosting" key.
+[info] Starting Firebase development server...
+[info] 
+[info] Project Directory: /Users/andyrenshaw/Desktop/clonedSynopticReports
+[info] 
+[info] Server listening at: http://localhost:5000
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] CLI Version:  3.2.0
+[debug] Platform:     darwin
+[debug] Node Version: v6.9.1
+[debug] Time:         Sat Dec 03 2016 11:53:29 GMT-0500 (EST)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[warn] ⚠  Deprecation Warning: Firebase Hosting configuration should be moved under "hosting" key.
+[info] Starting Firebase development server...
+[info] 
+[info] Project Directory: /Users/andyrenshaw/Desktop/clonedSynopticReports
+[info] 
+[info] Server listening at: http://localhost:5000
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] CLI Version:  3.2.0
+[debug] Platform:     darwin
+[debug] Node Version: v6.9.1
+[debug] Time:         Sat Dec 03 2016 18:29:08 GMT-0500 (EST)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[warn] ⚠  Deprecation Warning: Firebase Hosting configuration should be moved under "hosting" key.
+[info] Starting Firebase development server...
+[info] 
+[info] Project Directory: /Users/andyrenshaw/Desktop/clonedSynopticReports
+[info] 
+[info] Server listening at: http://localhost:5000
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] CLI Version:  3.2.0
+[debug] Platform:     darwin
+[debug] Node Version: v6.9.1
+[debug] Time:         Sun Dec 04 2016 09:44:43 GMT-0500 (EST)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[warn] ⚠  Deprecation Warning: Firebase Hosting configuration should be moved under "hosting" key.
+[info] Starting Firebase development server...
+[info] 
+[info] Project Directory: /Users/andyrenshaw/Desktop/clonedSynopticReports
+[info] 
+[info] Server listening at: http://localhost:5000
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] CLI Version:  3.2.0
+[debug] Platform:     darwin
+[debug] Node Version: v6.9.1
+[debug] Time:         Sun Dec 04 2016 11:50:00 GMT-0500 (EST)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[warn] ⚠  Deprecation Warning: Firebase Hosting configuration should be moved under "hosting" key.
+[info] Starting Firebase development server...
+[info] 
+[info] Project Directory: /Users/andyrenshaw/Desktop/clonedSynopticReports
+[info] 
+[info] Server listening at: http://localhost:5000
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] CLI Version:  3.2.0
+[debug] Platform:     darwin
+[debug] Node Version: v6.9.1
+[debug] Time:         Sun Dec 04 2016 16:32:39 GMT-0500 (EST)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[warn] ⚠  Deprecation Warning: Firebase Hosting configuration should be moved under "hosting" key.
+[info] Starting Firebase development server...
+[info] 
+[info] Project Directory: /Users/andyrenshaw/Desktop/clonedSynopticReports
+[info] 
+[info] Server listening at: http://localhost:5000
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] CLI Version:  3.2.0
+[debug] Platform:     darwin
+[debug] Node Version: v6.9.1
+[debug] Time:         Sun Dec 04 2016 17:49:49 GMT-0500 (EST)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[warn] ⚠  Deprecation Warning: Firebase Hosting configuration should be moved under "hosting" key.
+[info] Starting Firebase development server...
+[info] 
+[info] Project Directory: /Users/andyrenshaw/Desktop/clonedSynopticReports
+[info] 
+[info] Server listening at: http://localhost:5000
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] CLI Version:  3.2.0
+[debug] Platform:     darwin
+[debug] Node Version: v6.9.1
+[debug] Time:         Tue Dec 06 2016 14:58:27 GMT-0500 (EST)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[warn] ⚠  Deprecation Warning: Firebase Hosting configuration should be moved under "hosting" key.
+[info] Starting Firebase development server...
+[info] 
+[info] Project Directory: /Users/andyrenshaw/Desktop/clonedSynopticReports
+[info] 
+[info] Server listening at: http://localhost:5000
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] CLI Version:  3.2.0
+[debug] Platform:     darwin
+[debug] Node Version: v6.9.1
+[debug] Time:         Tue Dec 06 2016 15:21:32 GMT-0500 (EST)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[warn] ⚠  Deprecation Warning: Firebase Hosting configuration should be moved under "hosting" key.
+[info] Starting Firebase development server...
+[info] 
+[info] Project Directory: /Users/andyrenshaw/Desktop/clonedSynopticReports
+[info] 
+[info] Server listening at: http://localhost:5000
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] CLI Version:  3.2.0
+[debug] Platform:     darwin
+[debug] Node Version: v6.9.1
+[debug] Time:         Wed Dec 07 2016 17:13:46 GMT-0500 (EST)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[warn] ⚠  Deprecation Warning: Firebase Hosting configuration should be moved under "hosting" key.
+[info] Starting Firebase development server...
+[info] 
+[info] Project Directory: /Users/andyrenshaw/Desktop/clonedSynopticReports
+[info] 
+[info] Server listening at: http://localhost:5000
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] CLI Version:  3.2.0
+[debug] Platform:     darwin
+[debug] Node Version: v6.9.1
+[debug] Time:         Wed Dec 07 2016 19:32:49 GMT-0500 (EST)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[warn] ⚠  Deprecation Warning: Firebase Hosting configuration should be moved under "hosting" key.
+[info] Starting Firebase development server...
+[info] 
+[info] Project Directory: /Users/andyrenshaw/Desktop/clonedSynopticReports
+[info] 
+[info] Server listening at: http://localhost:5000
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] CLI Version:  3.2.0
+[debug] Platform:     darwin
+[debug] Node Version: v6.9.1
+[debug] Time:         Thu Dec 08 2016 14:48:09 GMT-0500 (EST)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[warn] ⚠  Deprecation Warning: Firebase Hosting configuration should be moved under "hosting" key.
+[info] Starting Firebase development server...
+[info] 
+[info] Project Directory: /Users/andyrenshaw/Desktop/clonedSynopticReports
+[info] 
+[info] Server listening at: http://localhost:5000
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] CLI Version:  3.2.0
+[debug] Platform:     darwin
+[debug] Node Version: v6.9.1
+[debug] Time:         Fri Dec 09 2016 14:23:23 GMT-0500 (EST)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[warn] ⚠  Deprecation Warning: Firebase Hosting configuration should be moved under "hosting" key.
+[info] Starting Firebase development server...
+[info] 
+[info] Project Directory: /Users/andyrenshaw/Desktop/clonedSynopticReports
+[info] 
+[info] Server listening at: http://localhost:5000
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] CLI Version:  3.2.0
+[debug] Platform:     darwin
+[debug] Node Version: v6.9.1
+[debug] Time:         Fri Dec 09 2016 15:05:54 GMT-0500 (EST)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[warn] ⚠  Deprecation Warning: Firebase Hosting configuration should be moved under "hosting" key.
+[info] Starting Firebase development server...
+[info] 
+[info] Project Directory: /Users/andyrenshaw/Desktop/clonedSynopticReports
+[info] 
+[info] Server listening at: http://localhost:5000
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] CLI Version:  3.2.0
+[debug] Platform:     darwin
+[debug] Node Version: v6.9.1
+[debug] Time:         Sat Dec 10 2016 12:15:10 GMT-0500 (EST)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[warn] ⚠  Deprecation Warning: Firebase Hosting configuration should be moved under "hosting" key.
+[info] Starting Firebase development server...
+[info] 
+[info] Project Directory: /Users/andyrenshaw/Desktop/clonedSynopticReports
+[info] 
+[info] Server listening at: http://localhost:5000

@@ -16,6 +16,14 @@
 
   <link rel="stylesheet" href="css/styles.css">
 
+<!-- Material Design Lite -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-indigo.min.css">
+  <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+
+  <!-- App Styling -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+
 
   <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -49,14 +57,29 @@
         <ul class="nav navbar-nav">
           <li><a href="contact.html">Contact</a></li>
           <li><a href="about.html">About</a></li>
+          <li><a href="Customize.html">Customize</a></li>
+        
+
+          <li hidden id="user-name" class = "mdl-color-text--green">un</li>
+          <li> it </li>
+          <li    hidden = "true" <button   id="sign-out" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
+                Sign-out
+              </button></li>
+          <li    hidden = "true" <button   id="sign-in" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
+                <i class="material-icons">account_circle</i>Sign-in with Google
+              </button></li>
+
         </ul>
       </div><!--/.nav-collapse -->
     </div>
   </nav>
 
+
+
+
   <div class="container">
     <div class="synoptic-reports">
-      <h1>Generating Tumor Summaries/Synoptic Reports</h1>
+      <h1>Generating Tumor Summaries/Synoptic Reports Development</h1>
       <p>Click on a tumor site/type.</p>
       <br/>
       <div id="tumor-type-grid">Loading...</div>
