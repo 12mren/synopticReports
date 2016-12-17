@@ -41,8 +41,8 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
+     <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container", id = "navbarheight">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
           <span class="sr-only">Toggle navigation</span>
@@ -56,21 +56,14 @@
         <ul class="nav navbar-nav">
           <li><a href="contact.html">Contact</a></li>
           <li><a href="about.html">About</a></li>
-
           <li><a href="Customize.html">Customize</a></li>
-        
-
-          <li hidden id="user-name" class = "mdl-color-text--green">un</li>
-          <li> it </li>
-          <li    hidden = "true" <button   id="sign-out" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
-                Sign-out
-              </button></li>
-          <li    hidden = "true" <button   id="sign-in" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
-                <i class="material-icons">account_circle</i>Sign-in with Google
-              </button></li>
+          
+          <li> <button onclick="signOut()" id = "SignOutButton">Sign out</button></li>
+          
+          <li id = "usernamedisplay" style = "color:aqua; display:none">   id</li>
 
         </ul>
-      </div><!--/.nav-collapse -->
+      </div>
     </div>
   </nav>
 

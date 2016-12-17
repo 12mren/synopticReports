@@ -1,131 +1,7 @@
-// Initializes a session with Syn Rep (Synoptic Reports) for logging in and display on nacbar.
-function SynRep() {
-  this.checkSetup();
 
-  // Shortcuts to DOM Elements.
-  this.messageList = document.getElementById('messages');
-  this.messageForm = document.getElementById('message-form');
-  this.messageInput = document.getElementById('message');
-  this.submitButton = document.getElementById('submit');
-  this.submitImageButton = document.getElementById('submitImage');
-  this.imageForm = document.getElementById('image-form');
-  this.mediaCapture = document.getElementById('mediaCapture');
-  this.userPic = document.getElementById('user-pic');
-  this.userName = document.getElementById('user-name');
-  this.signInButton = document.getElementById('sign-in');
-  this.signOutButton = document.getElementById('sign-out');
-  this.signInSnackbar = document.getElementById('must-signin-snackbar');
 
-  // Saves message on form submit.
-  //this.messageForm.addEventListener('submit', this.saveMessage.bind(this));
-  this.signOutButton.addEventListener('click', this.signOut.bind(this));
-  this.signInButton.addEventListener('click', this.signIn.bind(this));
 
-  // Toggle for the button for writing.
-  //var buttonTogglingHandler = this.toggleButton.bind(this);
-  //this.messageInput.addEventListener('keyup', buttonTogglingHandler);
-  //this.messageInput.addEventListener('change', buttonTogglingHandler);
-
- 
-  this.initFirebase();
-}
-
-// Sets up shortcuts to Firebase features and initiate firebase auth.
-SynRep.prototype.initFirebase = function() {
-  // Shortcuts to Firebase SDK features.
-  this.auth = firebase.auth();
-  this.database = firebase.database();
-  //this.storage = firebase.storage();
-  // Initiates Firebase auth and listen to auth state changes.
-  this.auth.onAuthStateChanged(this.onAuthStateChanged.bind(this));
-};
-
-// Signs-in Syn Rep.
-SynRep.prototype.signIn = function() {
-  // Sign in Firebase using popup auth and Google as the identity provider.
-  var provider = new firebase.auth.GoogleAuthProvider();
-  this.auth.signInWithPopup(provider);
-};
-
-// Signs-out of Syn Rep.
-SynRep.prototype.signOut = function() {
-  // Sign out of Firebase.
-  this.auth.signOut();
-};
-
-// Triggers when the auth state change for instance when the user signs-in or signs-out.
-SynRep.prototype.onAuthStateChanged = function(user) {
-  if (user) { // User is signed in!
-    var userName = user.displayName;
-    currentUser = user; 
-    this.userName.textContent = userName;
-   
-    // Show user's profile and sign-out button.
-    this.userName.removeAttribute('hidden');
   
-    this.signOutButton.removeAttribute('hidden');
-
-    // Hide sign-in button.
-    this.signInButton.setAttribute('hidden', 'true');
-   
-    // We load currently existing chant messages.
-    //this.loadMessages();
-  } else { // User is signed out!
-    // Hide user's profile and sign-out button.
-    this.userName.setAttribute('hidden', 'true');
-    //this.userPic.setAttribute('hidden', 'true');
-    this.signOutButton.setAttribute('hidden', 'true');
-
-    // Show sign-in button.
-    this.signInButton.removeAttribute('hidden');
-  }
-};
-
-// Returns true if user is signed-in. Otherwise false and displays a message.
-SynRep.prototype.checkSignedInWithMessage = function() {
-  // Return true if the user is signed in Firebase
-  if (this.auth.currentUser) {
-    return true;
-  }
-
-  // Display a message to the user using a Toast.
-  var data = {
-    message: 'You must sign-in first',
-    timeout: 2000
-  };
-  this.signInSnackbar.MaterialSnackbar.showSnackbar(data);
-  return false;
-};
-
-  // Checks that the Firebase SDK has been correctly setup and configured.
-SynRep.prototype.checkSetup = function() {
-  if (!window.firebase || !(firebase.app instanceof Function) || !window.config) {
-    window.alert('You have not configured and imported the Firebase SDK. ' +
-        'Make sure you go through the codelab setup instructions.');
-  } /*else if (config.storageBucket === '') {
-    window.alert('Your Firebase Storage bucket has not been enabled. Sorry about that. This is ' +
-        'actually a Firebase bug that occurs rarely. ' +
-        'Please go and re-generate the Firebase initialisation snippet (step 4 of the codelab) ' +
-        'and make sure the storageBucket attribute is not empty. ' +
-        'You may also need to visit the Storage tab and paste the name of your bucket which is ' +
-        'displayed there.');
-  }*/
-};
-
-window.onload = function() {
-  window.SynRep = new SynRep();
-};
-
-
-  //function to write the new output choice to the database
- function writeUserData(uId, username, d_input, d_output) {
-      firebase.database().ref('/users/' + uId).set({
-        username: username,
-        input_choice: d_input,
-        output_choice : d_output
-       
-    });
-   }
 
 
 
@@ -142,6 +18,44 @@ window.onload = function() {
 
 firebase.initializeApp(config);
 
+
+//Sign in functions
+
+
+
+function signOut(){
+  console.log('signing out function NOW');
+
+  //var user = firebase.auth().currentUser;  check did not check
+  //console.log("useruid "+user.uid);
+
+  firebase.auth().signOut().then(function() {
+  // Sign-out successful.
+  console.log("signed out");
+
+  //return to main page
+  window.location = "index.html";
+
+  }, function(error) {
+    // An error happened.
+  });
+
+}
+
+//a watcher to make sure user authenticated before showing page
+firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    
+
+// User is signed in.
+    console.log('user AUTH  NOW logged in')
+    
+    console.log("email "+user.email);
+    console.log("useruid "+user.uid);
+
+    document.getElementById("usernamedisplay").style.display = "block";
+    document.getElementById("usernamedisplay").textContent = user.email;
+
 // Get a reference to the database service
 var database = firebase.database();
 
@@ -151,13 +65,13 @@ var database = firebase.database();
 database.ref('/users/').once('value').then(function(snapshot) {
   //Get get current choice and display it, make variable global for later writing function
   var users = snapshot.val();
-  current_choice = users[currentUser.uid].input_choice; 
+  current_choice = users[user.uid].input_choice; 
   document.getElementById("current").textContent =  current_choice;
 
   // get global user info for updating
-  currentUserId = currentUser.uid;
-  currentUserName = users[currentUser.uid].name;
-  currentUserOutputChoice = users[currentUser.uid].output_choice;
+  // currentUserId = currentUser.uid;
+  // currentUserName = users[user.uid].name;
+  currentUserOutputChoice = users[user.uid].output_choice;
 });
 
 
@@ -178,21 +92,6 @@ database.ref('/input_choice_list/').once('value').then(function(snapshot) {
 });
 
 
-//Fucntion to see what the user chose and to change both the database and the current choice on the website
-function change_input(){
-  //get the users choice from the radio buttons
-  var k = $("input[name=rate]:checked").val();
-  
-  //put in html format
-  var h ='<p>'+k+'</p>'
-  
-  //update webpage
-  $('#current').html(h);
-
-  //update database with new choice with the writeUserData function
-  
-  writeUserData(currentUserId, currentUserName, k, currentUserOutputChoice);
-};
 
 
  
@@ -315,6 +214,70 @@ database.ref('/tumor_types/').once('value').then(function(snapshot) {
 function (errorObject) {
   console.log('The read failed: ' + errorObject.code);
 });
+
+} else {
+    // No user is signed in.
+    console.log ('user AUTH logged out');
+    
+  }
+});
+
+
+//function to write the new output choice to the database
+ function writeUserData(uId, useremail, d_input, d_output) {
+      firebase.database().ref('/users/' + uId).set({
+        email: useremail,
+        input_choice: d_input,
+        output_choice : d_output
+       
+    });
+   }
+
+
+//Fucntion to see what the user chose and to change both the database and the current choice on the website
+function change_input(){
+  // Get a reference to the database service
+  var database = firebase.database();
+
+
+
+  //get the users current input choice and display it
+  database.ref('/users/').once('value').then(function(snapshot) {
+  //Get get current choice and display it, make variable global for later writing function
+  var users = snapshot.val();
+
+  var user = firebase.auth().currentUser;
+  currentUserOutputChoice = users[user.uid].output_choice; 
+
+
+
+  //get the users choice from the radio buttons
+  var k = $("input[name=rate]:checked").val();
+  
+  //put in html format
+  var h ='<p>'+k+'</p>'
+  
+  //update webpage
+  $('#current').html(h);
+
+  //update database with new choice with the writeUserData function
+  
+  writeUserData(user.uid, user.email, k, currentUserOutputChoice);
+
+});
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

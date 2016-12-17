@@ -43,7 +43,7 @@
 
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
+    <div class="container", id = "navbarheight">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
           <span class="sr-only">Toggle navigation</span>
@@ -58,21 +58,87 @@
           <li><a href="contact.html">Contact</a></li>
           <li><a href="about.html">About</a></li>
           <li><a href="Customize.html">Customize</a></li>
-        
-
-          <li hidden id="user-name" class = "mdl-color-text--green">un</li>
-          <li> it </li>
-          <li    hidden = "true" <button   id="sign-out" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
-                Sign-out
-              </button></li>
-          <li    hidden = "true" <button   id="sign-in" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
-                <i class="material-icons">account_circle</i>Sign-in with Google
-              </button></li>
+          <li> <button onclick="document.getElementById('id01').style.display='block'" id = "loginButton">Sign in</button></li>
+          <li> <button onclick="signOut()" id = "SignOutButton" style = "display:none">Sign out</button></li>
+          <li> <button onclick="document.getElementById('id02').style.display='block'" id = "register" >Register</button></li>
+          <li id = "usernamedisplay" style = "color:aqua; display:none">   id</li>
 
         </ul>
-      </div><!--/.nav-collapse -->
+      </div>
     </div>
   </nav>
+
+
+
+
+
+
+<!-- The Login Modal -->
+<div id="id01" class="modal">
+  <span onclick="document.getElementById('id01').style.display='none'" 
+class="close" title="Close Modal">&times;</span>
+
+<!-- Modal Content -->
+  <form class="modal-content animate" action="index.html">
+
+<div id = "modalformat" class="container">
+<div class="main">
+<h2>Synoptic Reports Login</h2>
+<form id="form_id" method="post" name="myform">
+<label>Email :</label>
+<input type="text" name="email" id="email"/>
+<label>Password :</label>
+<input type="password" name="password" id="password"/>
+<input type="button" value="Login" id="submit" onclick="login()"/>
+</form>
+<!-- <span><b class="note">Note : </b>For this demo use following username and password. <br/><b class="valid">User Name : Formget<br/>Password : formget#123</b></span> -->
+</div>
+</div>
+</form>
+
+</div>
+
+<!-- The Registration Modal -->
+<div id="id02" class="modal">
+  <span onclick="document.getElementById('id02').style.display='none'" 
+class="close" title="Close Modal">&times;</span>
+
+<!-- Modal Content -->
+  <form class="modal-content animate" action="index.html">
+
+<div id = "modalformat" class="container">
+<div class="main">
+<h2>Synoptic Reports Registration</h2>
+<form id="form_id" method="post" name="myform">
+<label>Email :</label>
+<input type="email" name="email" id="newEmail"/>
+<label>Password :</label>
+<input type="password" name="password" id="newPassword"/>
+
+<input type="button" value="Register" id="submit" onclick="register()"/>
+</form>
+
+</div>
+</div>
+</form>
+
+</div>
+
+
+
+
+<script>
+// to close modal when click out of it
+// Get the modal
+var modal = document.getElementById('id01');
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+</script>
 
 
 
@@ -91,6 +157,29 @@
    <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+
+   <script>
+// to close modal when click out of it
+// Get the modal
+var modal1 = document.getElementById('id01');
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal1) {
+        modal1.style.display = "none";
+    }
+}
+
+var modal2 = document.getElementById('id02');
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal2) {
+        modal2.style.display = "none";
+    }
+}
+
+</script> 
   <script src="https://www.gstatic.com/firebasejs/3.2.0/firebase.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
