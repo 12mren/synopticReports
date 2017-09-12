@@ -186,6 +186,8 @@ function generateReport(isBiopsy) {
 	var report = "";
 	var location = "";
 	var procedure = "";
+	var part = "";
+    var diagnosisType = "";
 	//Loop over properties (rows of table)
 	$('#tumor-form > tbody  > tr').each(function() {
 		//Grab label, add | character, and remove description (content following :)
@@ -200,11 +202,20 @@ function generateReport(isBiopsy) {
 		if (label === "| Procedure:") {
 			procedure = values;
 		}
+
+		if (label === "| Part:") {
+            part = values;
+        }
+
+
+		if (label === "| Diagnosis/Type:") {
+                diagnosisType = values;
+        }
 		
 		//Add line to report
 		for (i=0; i< values.length; i++){
 			var value = values[i];
-			if (!isBiopsy || (label != "| Location:" && label != "| Procedure:")) {
+			if (!isBiopsy || (label != "| Part:" && label != "| Location:" && label != "| Procedure:" && label != "| Diagnosis/Type:")) {
 				//Add line to report
 				if (value!="") {
 					if (i!=values.length-1) {
@@ -241,6 +252,8 @@ function generateReport(isBiopsy) {
 	//Add header
 	var locationString = "";
 	var procedureString = "";
+	var partString = "";
+	var diagnosisTypeString = "";
 	for (i=0; i<location.length; i++) {
 		if (i!=0) {
 			locationString += ", "
@@ -253,8 +266,22 @@ function generateReport(isBiopsy) {
 		}
 		procedureString += procedure[i];
 	}
+	for (i=0; i<part.length; i++) {
+        if (i!=0) {
+            partString += ", "
+        }
+        partString += part[i];
+    }
+
+
+    for (i=0; i<diagnosisType.length; i++) {
+        if (i!=0) {
+            diagnosisTypeString += ", "
+        }
+    	diagnosisTypeString += diagnosisType[i];
+    }
 	if (isBiopsy){
-		report = "<p>|" +  tumorName + ": " + locationString +", " + procedureString + "</p><table>" + report;
+		report = "<p>|" + partString + " " + tumorName + ", " + locationString +", " + procedureString + ":"+ "</p><table><tr><td class='report-indent'></td><td class='report-label'>" + diagnosisTypeString + "</td><td></td></tr></table><table>" + report;
 	}
 	else {
 		report = "<table><tr><td>| TUMOR SUMMARY:</td><td>" + tumorName + "</td></tr>" + report;
@@ -270,6 +297,8 @@ function generateReportSpace(isBiopsy) {
 	var location = "";
 	var procedure = "";
 	var report = "";
+	var part = "";
+    var diagnosisType = "";
 	
 	//Loop over properties (rows of table)
 	$('#tumor-form > tbody  > tr').each(function() {
@@ -284,12 +313,21 @@ function generateReportSpace(isBiopsy) {
 		if (label === "| Procedure:") {
 			procedure = values;
 		}
+
+		if (label === "| Part:") {
+            part = values;
+        }
+
+
+        if (label === "| Diagnosis/Type:") {
+            diagnosisType = values;
+        }
 		
 		//Add line to report
 		for (i=0; i<values.length; i++) {
 			var value = values[i];
 			if (value!=""){
-				if (!isBiopsy || (label != "| Location:" && label != "| Procedure:")) {
+				if (!isBiopsy || (label != "| Part:" && label != "| Location:" && label != "| Procedure:" && label != "| Diagnosis/Type:")) {
 					report += generateSpaceReportLine(label, value, isBiopsy, i, values.length);
 				}
 			}
@@ -303,6 +341,9 @@ function generateReportSpace(isBiopsy) {
 	//Add header
 	var locationString = "";
 	var procedureString = "";
+	var partString = "";
+	var diagnosisTypeString = "";
+
 	for (i=0; i<location.length; i++) {
 		if (i!=0) {
 			locationString += ", "
@@ -315,8 +356,23 @@ function generateReportSpace(isBiopsy) {
 		}
 		procedureString += procedure[i];
 	}
+
+	for (i=0; i<part.length; i++) {
+        if (i!=0) {
+                partString += ", "
+        }
+        partString += part[i];
+    }
+
+
+    for (i=0; i<diagnosisType.length; i++) {
+        if (i!=0) {
+                diagnosisTypeString += ", "
+        }
+    	diagnosisTypeString += diagnosisType[i];
+    }
 	if (isBiopsy) {
-		report = "<p>| " + tumorName + ": " + locationString +", " + procedureString + "</p>" + report;
+		report = "<p>|" + partString + " " + tumorName + ", " + locationString +", " + procedureString + ":"+ "</p><p>" + " ".repeat(tabLength) + diagnosisTypeString + "</p>" + report;
 	}
 	else {
 		report = "<p>" + reportHeader + " ".repeat(longestPropertyName + 1 - reportHeader.length) + tumorName + "</p>" + report; 
