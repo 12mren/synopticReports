@@ -91,8 +91,6 @@ database.ref('/tumor_types/' + QueryString.id).once('value').then(function(snaps
 
 //Generate the html for the tumor form
 function generateTumorFormHTML(tumorProperties) {
-	console.log("hello");
-
 	tumorFormHTML = "";
 	for (i=0; i<tumorProperties.length; i++) {
   	//Get property information
