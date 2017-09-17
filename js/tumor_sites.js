@@ -74,15 +74,15 @@ database.ref('/tumor_types/' + QueryString.id).once('value').then(function(snaps
 	  	else {
 	  		$('#tumor-name').html(tumorName);
 	  	}
-		  //Add html to page
-			$('#tumor-form').html(tumorFormHTML);
-		}
-		//Add message for tumor types that have not been implemented yet.
-		else {
-			$('#header').css('display', 'block');
-			$('#no-report').css('display', 'block')
-		}
+		 //Add html to page
+		$('#tumor-form').html(tumorFormHTML);
 	}
+	//Add message for tumor types that have not been implemented yet.
+	else {
+		$('#header').css('display', 'block');
+		$('#no-report').css('display', 'block')
+	}
+}
   //Give error message if failure from Firebase.
 }, function (errorObject) {
   console.log('The read failed: ' + errorObject.code);
@@ -91,6 +91,8 @@ database.ref('/tumor_types/' + QueryString.id).once('value').then(function(snaps
 
 //Generate the html for the tumor form
 function generateTumorFormHTML(tumorProperties) {
+	console.log("hello");
+
 	tumorFormHTML = "";
 	for (i=0; i<tumorProperties.length; i++) {
   	//Get property information
@@ -281,10 +283,11 @@ function generateReport(isBiopsy) {
     	diagnosisTypeString += diagnosisType[i];
     }
 	if (isBiopsy){
-		report = "<p>|" + partString + " " + tumorName + ", " + locationString +", " + procedureString + ":"+ "</p><table><tr><td class='report-indent'></td><td class='report-label'>" + diagnosisTypeString + "</td><td></td></tr></table><table>" + report;
+		var strippedTumorName = tumorName.replace(" biopsy", "");
+		report = "<p>|" + partString + " " + strippedTumorName + ", " + locationString +", " + procedureString + ":"+ "</p><table><tr><td class='report-indent'></td><td class='report-label'>" + diagnosisTypeString + "</td><td></td></tr></table><table>" + report;
 	}
 	else {
-		report = "<table><tr><td>| TUMOR SUMMARY:</td><td>" + tumorName + "</td></tr>" + report;
+	    report = "<table><tr><td>| TUMOR SUMMARY:</td><td>" + tumorName + "</td></tr>" + report;
 	}
 
 	//Add report to table.
@@ -372,7 +375,8 @@ function generateReportSpace(isBiopsy) {
     	diagnosisTypeString += diagnosisType[i];
     }
 	if (isBiopsy) {
-		report = "<p>|" + partString + " " + tumorName + ", " + locationString +", " + procedureString + ":"+ "</p><p>" + " ".repeat(tabLength) + diagnosisTypeString + "</p>" + report;
+	    var strippedTumorName = tumorName.replace(" biopsy", "");
+		report = "<p>|" + partString + " " + strippedTumorName + ", " + locationString +", " + procedureString + ":"+ "</p><p>" + " ".repeat(tabLength) + diagnosisTypeString + "</p>" + report;
 	}
 	else {
 		report = "<p>" + reportHeader + " ".repeat(longestPropertyName + 1 - reportHeader.length) + tumorName + "</p>" + report; 
