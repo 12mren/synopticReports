@@ -2,7 +2,12 @@
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
+    -moz-tab-size: 5; /* Firefox */
+    -o-tab-size: 5; /* Opera 10.6-12.1 */
+    tab-size: 5;
 }
+
+
 
 body {
   padding-top: 50px;
@@ -116,7 +121,17 @@ label {
   margin-bottom: 30px;
 }
 
-#generated-report p, #generated-report-space p, #generated-report-two-line p {
+#generated-report-tabbed {
+  line-height: 100%;
+  font-size: 14.5px; /*11pt font in Word*/
+  font-family: monospace;
+  font-weight: bold;
+  text-align: left;
+  white-space:pre;
+  margin-bottom: 30px;
+}
+
+#generated-report p, #generated-report-space p, #generated-report-two-line p, #generated-report-tabbed p {
   margin: 0;
 }
 

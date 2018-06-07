@@ -66,11 +66,13 @@
           <div class="row">
             <button class="btn btn-primary col-lg-3" onclick="return generateReport(false);">A. Generate Table Report (Word)</button>
             <button class="btn btn-primary col-lg-3" onclick="return generateReportSpace(false);">B. Generate Spaced Report</button>
+            <button class="btn btn-primary col-lg-3" onclick="return generateReportTabbed(false);">C. Generate Tabbed Report</button>
            <!--  <button class="btn btn-primary col-lg-3" onclick="return generateReportTwoLines();">C. Generate Two Line Report</button> -->
           </div></br>
           <div class="row" id="biopsy-button" style="display:none;">
-            <button class="btn btn-primary col-lg-3" onclick="return generateReport(true);">C. Generate Biopsy Table Report (Word)</button>
-            <button class="btn btn-primary col-lg-3" onclick="return generateReportSpace(true);">D. Generate Biopsy Spaced Report</button>
+            <button class="btn btn-primary col-lg-3" onclick="return generateReport(true);">D. Generate Biopsy Table Report (Word)</button>
+            <button class="btn btn-primary col-lg-3" onclick="return generateReportSpace(true);">E. Generate Biopsy Spaced Report</button>
+            <button class="btn btn-primary col-lg-3" onclick="return generateReportTabbed(true);">F. Generate Biopsy Tabbed Report</button>
           </div>
           <p>The text will appear below. Cut and paste into your document.</p>
           <p>To resubmit form, change answers above and re-click button. If you refresh the page, ALL YOUR INPUT WILL DISAPPEAR.</p>
@@ -85,6 +87,8 @@
       <div id="generated-report">
       </div>
       <div id="generated-report-space">
+      </div>
+      <div id="generated-report-tabbed">
       </div>
       <div id="generated-report-two-line">
       </div>

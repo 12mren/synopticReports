@@ -1,11 +1,12 @@
 var tumorName = "";
 var reportHeader = "| TUMOR SUMMARY:";
 var longestPropertyName = reportHeader.length;
-var longestReportLengthTabs = 80;
+var longestReportLengthTabs = 72;
 var tabLength = 5;
 var biopsyType = "";
 var skipLabel = "?????YOU SKIPPED THIS!!!!!";
 var freeTextLabel = "Free text:";
+var tabLineLengthToStart = tabLength - (longestPropertyName % tabLength) + longestPropertyName
 
 //Get the parameters passed into the URL
 var QueryString = function () {
@@ -100,6 +101,7 @@ function generateTumorFormHTML(tumorProperties) {
 		//3 for '|', ' ', and ':' characters added to property name in report output
 		if (propertyName.length + 3 > longestPropertyName) {
 			longestPropertyName = propertyName.length + 3;
+			tabLineLengthToStart = tabLength - (longestPropertyName % tabLength) + longestPropertyName
 		}
 		var propertyDescription = property.description!=null ? " [" + property.description + "]" : "";
 		var propertyOptions = property.options;
@@ -295,6 +297,16 @@ function generateReport(isBiopsy) {
 
 //Generate report with spaces.
 function generateReportSpace(isBiopsy) {
+	generateWhiteSpaceReport(isBiopsy, /*useTabs=*/false)
+
+};
+
+//Generate report with tabs.
+function generateReportTabbed(isBiopsy) {
+	generateWhiteSpaceReport(isBiopsy, /*useTabs=*/true)
+};
+
+function generateWhiteSpaceReport(isBiopsy, useTabs) {
 	var location = "";
 	var procedure = "";
 	var report = "";
@@ -329,15 +341,18 @@ function generateReportSpace(isBiopsy) {
 			var value = values[i];
 			if (value!=""){
 				if (!isBiopsy || (label != "| Part:" && label != "| Location:" && label != "| Procedure:" && label != "| Diagnosis/Type:")) {
-					report += generateSpaceReportLine(label, value, isBiopsy, i, values.length);
+					report += generateWhiteSpaceReportLine(label, value, isBiopsy, i, values.length, useTabs);
 				}
 			}
 		}
-		
-		
 	});
 	if (isBiopsy) {
-		report+= "<p>" + " ".repeat(tabLength) + "||</p>"
+		if (useTabs) {
+			report+= "<p>\t||</p>"
+		} else {
+			report+= "<p>" + " ".repeat(tabLength) + "||</p>"
+		}
+		
 	}
 	//Add header
 	var locationString = "";
@@ -374,38 +389,67 @@ function generateReportSpace(isBiopsy) {
     }
 	if (isBiopsy) {
 	    var strippedTumorName = tumorName.replace(" biopsy", "");
-		report = "<p>|" + partString + " " + strippedTumorName + ", " + locationString +", " + procedureString + ":"+ "</p><p>" + " ".repeat(tabLength) + diagnosisTypeString + "</p>" + report;
+	    if (useTabs){
+			report = "<p>|" + partString + " " + strippedTumorName + ", " + locationString +", " + procedureString + ":"+ "</p><p>\t" + diagnosisTypeString + "</p>" + report;
+	    } else {
+	    	report = "<p>|" + partString + " " + strippedTumorName + ", " + locationString +", " + procedureString + ":"+ "</p><p>" + " ".repeat(tabLength) + diagnosisTypeString + "</p>" + report;
+	    }
 	}
 	else {
-		report = "<p>" + reportHeader + " ".repeat(longestPropertyName + 1 - reportHeader.length) + tumorName + "</p>" + report; 
+		if (useTabs) {
+			report = "<p>" + reportHeader + "\t".repeat(Math.ceil((tabLineLengthToStart - reportHeader.length)/tabLength)) + tumorName + "</p>" + report; 
+		} else {
+			report = "<p>" + reportHeader + " ".repeat(longestPropertyName + 1 - reportHeader.length) + tumorName + "</p>" + report; 
+		}
+		
 	}
-  $('#generated-report-space').html(report);
-};
+	if (useTabs) {
+		$('#generated-report-tabbed').html(report);
+	} else {
+		$('#generated-report-space').html(report);
+	}
+}
 
-function generateSpaceReportLine(label, value, isBiopsy, lineNum, numLines){
+function generateWhiteSpaceReportLine(label, value, isBiopsy, lineNum, numLines, useTabs){
 	if (lineNum!= numLines - 1){
 		value += ",";
 	}
 	var report = "";
 	if (isBiopsy) {
-		report+="<p>" + " ".repeat(tabLength);
+		if (useTabs) {
+			report+="<p>\t";
+		}
+		else {
+			report+="<p>" + " ".repeat(tabLength);
+		}
 	}
 	else {
 		report+="<p>";
 	}
 	if (lineNum == 0){
-		report += label + " ".repeat(longestPropertyName + 1 - label.length);
+		if (useTabs) {
+			report += label + "\t".repeat(Math.ceil((tabLineLengthToStart - label.length)/tabLength));
+		}
+		else {
+			report += label + " ".repeat(longestPropertyName + 1 - label.length);
+		}
 	}
 	else {
-		report += " ".repeat(longestPropertyName + 1);
+		if (useTabs) {
+			report += "\t".repeat(Math.ceil((tabLineLengthToStart)/tabLength));
+		}
+		else {
+			report += " ".repeat(longestPropertyName + 1);
+		}
 	}
 	if (value.length <= longestReportLengthTabs - longestPropertyName - 1) {
 		report += value + "</p>";
 	}
 	else {
-		while (value.length > longestReportLengthTabs - longestPropertyName - 1) {
+		var factor = useTabs ? tabLineLengthToStart : longestPropertyName - 1;
+		while (value.length > longestReportLengthTabs - factor) {
 			var foundSpace = false;
-			var index = longestReportLengthTabs - longestPropertyName - 1;
+			var index = longestReportLengthTabs - factor;
 			for (i = index; i>=0; i--) {
 				if (value[i] == " ") {
 					index = i;
@@ -422,10 +466,20 @@ function generateSpaceReportLine(label, value, isBiopsy, lineNum, numLines){
 				value = value.substring(index +1, value.length);
 			}
 			if (isBiopsy){
-				report += "<p>" + " ".repeat(longestPropertyName + 1 + tabLength);
+				if (useTabs) {
+					report += "<p>" + "\t".repeat(Math.ceil((tabLineLengthToStart)/tabLength) + 1);
+				}
+				else {
+					report += "<p>" + " ".repeat(longestPropertyName + 1 + tabLength);
+				}
 			}	
 			else {
-				report += "<p>" + " ".repeat(longestPropertyName + 1);
+				if (useTabs) {
+					report += "<p>" + "\t".repeat(Math.ceil((tabLineLengthToStart)/tabLength));
+				} 
+				else {
+					report += "<p>" + " ".repeat(longestPropertyName + 1);
+				}
 			}
 			
 		}
