@@ -123,8 +123,8 @@ label {
 
 #generated-report-tabbed {
   line-height: 100%;
-  font-size: 14.5px; /*11pt font in Word*/
-  font-family: monospace;
+  font-size: 10pt; /*11pt font in Word*/
+  font-family: 'Courier New';
   font-weight: bold;
   text-align: left;
   white-space:pre;

@@ -7,6 +7,7 @@ var biopsyType = "";
 var skipLabel = "?????YOU SKIPPED THIS!!!!!";
 var freeTextLabel = "Free text:";
 var tabLineLengthToStart = tabLength - (longestPropertyName % tabLength) + longestPropertyName
+var maxTabLabelLength = 37 // 35 + '|' + ' ' or '\t'
 
 //Get the parameters passed into the URL
 var QueryString = function () {
@@ -100,8 +101,13 @@ function generateTumorFormHTML(tumorProperties) {
 
 		//3 for '|', ' ', and ':' characters added to property name in report output
 		if (propertyName.length + 3 > longestPropertyName) {
+			console.log(propertyName)
 			longestPropertyName = propertyName.length + 3;
-			tabLineLengthToStart = tabLength - (longestPropertyName % tabLength) + longestPropertyName
+			if (longestPropertyName <= maxTabLabelLength) {
+				tabLineLengthToStart = tabLength - (longestPropertyName % tabLength) + longestPropertyName;
+			} else {
+				tabLineLengthToStart = tabLength - (maxTabLabelLength % tabLength) + maxTabLabelLength;
+			}
 		}
 		var propertyDescription = property.description!=null ? " [" + property.description + "]" : "";
 		var propertyOptions = property.options;
@@ -428,7 +434,21 @@ function generateWhiteSpaceReportLine(label, value, isBiopsy, lineNum, numLines,
 	}
 	if (lineNum == 0){
 		if (useTabs) {
-			report += label + "\t".repeat(Math.ceil((tabLineLengthToStart - label.length)/tabLength));
+			if (label.length < maxTabLabelLength) {
+				report += label + "\t".repeat(Math.ceil((tabLineLengthToStart - label.length)/tabLength));
+			} else {
+				var spaceIndex = maxTabLabelLength - 1;
+				while (spaceIndex > 0) {
+					if (label[spaceIndex] == " ") {
+						break;
+					}
+					spaceIndex -= 1;
+				}
+				startLabel = label.substring(0, spaceIndex);
+				endLabel = label.substring(spaceIndex);
+				report += startLabel + "</p>";
+				report += "<p>\t" + endLabel + "\t".repeat(Math.ceil((tabLineLengthToStart - endLabel.length - tabLength)/tabLength));
+			}
 		}
 		else {
 			report += label + " ".repeat(longestPropertyName + 1 - label.length);
@@ -553,7 +573,7 @@ function generateReportTwoLines() {
 //Get the label of a property in the tumor form (ex/ "| Procedure:"" )
 function getPropertyLabel(tableRow) {
 	//Grab label, add | character, and remove description (content following :)
-	var label = $(':nth-child(1) > span[class="name"]', tableRow).html();
+	var label = $(':nth-child(1) > span[class="name"]', tableRow).text();
 	label = '| ' + label + ":";
 	return label;
 }
