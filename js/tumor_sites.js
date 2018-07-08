@@ -94,14 +94,13 @@ database.ref('/tumor_types/' + QueryString.id).once('value').then(function(snaps
 //Generate the html for the tumor form
 function generateTumorFormHTML(tumorProperties) {
 	tumorFormHTML = "";
-	for (i=0; i<tumorProperties.length; i++) {
+	for (var i=0; i<tumorProperties.length; i++) {
   	//Get property information
 		var property = tumorProperties[i];
 		var propertyName = property.name;
 
 		//3 for '|', ' ', and ':' characters added to property name in report output
 		if (propertyName.length + 3 > longestPropertyName) {
-			console.log(propertyName)
 			longestPropertyName = propertyName.length + 3;
 			if (longestPropertyName <= maxTabLabelLength) {
 				tabLineLengthToStart = tabLength - (longestPropertyName % tabLength) + longestPropertyName;
@@ -117,7 +116,7 @@ function generateTumorFormHTML(tumorProperties) {
 
 		//Add options for each property
 		if (propertyOptions != null) {
-			for (j=0; j< propertyOptions.length; j++) {
+			for (var j=0; j< propertyOptions.length; j++) {
 
 				//Get option information
 				var option = propertyOptions[j];
@@ -136,7 +135,7 @@ function generateTumorFormHTML(tumorProperties) {
 					tumorFormHTML += '<p>' + '<span class="name">' +  optionName + '</span><span class="description">' + optionDescription + '</span></p>';
 					tumorFormHTML += '<input onchange="toggleTextBox(this);" name="' + propertyName + '_' + j +  '"type="' + type + '"checked="checked"  value="-2" id="' + propertyName + j + "_-2"  +'"><label for="' + propertyName +  j + '_-2'  + '" class="skip-label">' + skipLabel + '</label><br>';
 
-					for (k=0; k< optionGroup.length; k++) {
+					for (var k=0; k< optionGroup.length; k++) {
 						//Get the sub otions in the group information
 						var subOption = optionGroup[k];
 						var subOptionName = subOption.name;
@@ -153,7 +152,7 @@ function generateTumorFormHTML(tumorProperties) {
 						else {
 							var inputs_string = "";
 							var count = 0;
-							for (l = 0; l< inputs.length; l++) {
+							for (var l = 0; l< inputs.length; l++) {
 								var input = inputs[l];
 								if (typeof(input) === "string") {
 									inputs_string+='<input id="' + string_identifier + "_" + l + '"name="' + propertyName + '_' + j + '"class="' + subOptionName + '"type = "text" disabled/><label for="' + string_identifier + "_" + l + '">' + input +' </label>';
@@ -221,7 +220,7 @@ function generateReport(isBiopsy) {
         }
 		
 		//Add line to report
-		for (i=0; i< values.length; i++){
+		for (var i=0; i< values.length; i++){
 			var value = values[i];
 			if (!isBiopsy || (label != "| Part:" && label != "| Location:" && label != "| Procedure:" && label != "| Diagnosis/Type:")) {
 				//Add line to report
@@ -262,19 +261,19 @@ function generateReport(isBiopsy) {
 	var procedureString = "";
 	var partString = "";
 	var diagnosisTypeString = "";
-	for (i=0; i<location.length; i++) {
+	for (var i=0; i<location.length; i++) {
 		if (i!=0) {
 			locationString += ", "
 		}
 		locationString += location[i];
 	}
-	for (i=0; i<procedure.length; i++) {
+	for (var i=0; i<procedure.length; i++) {
 		if (i!=0) {
 			procedureString += ", "
 		}
 		procedureString += procedure[i];
 	}
-	for (i=0; i<part.length; i++) {
+	for (var i=0; i<part.length; i++) {
         if (i!=0) {
             partString += ", "
         }
@@ -282,7 +281,7 @@ function generateReport(isBiopsy) {
     }
 
 
-    for (i=0; i<diagnosisType.length; i++) {
+    for (var i=0; i<diagnosisType.length; i++) {
         if (i!=0) {
             diagnosisTypeString += ", "
         }
@@ -343,7 +342,7 @@ function generateWhiteSpaceReport(isBiopsy, useTabs) {
         }
 		
 		//Add line to report
-		for (i=0; i<values.length; i++) {
+		for (var i=0; i<values.length; i++) {
 			var value = values[i];
 			if (value!=""){
 				if (!isBiopsy || (label != "| Part:" && label != "| Location:" && label != "| Procedure:" && label != "| Diagnosis/Type:")) {
@@ -366,20 +365,20 @@ function generateWhiteSpaceReport(isBiopsy, useTabs) {
 	var partString = "";
 	var diagnosisTypeString = "";
 
-	for (i=0; i<location.length; i++) {
+	for (var i=0; i<location.length; i++) {
 		if (i!=0) {
 			locationString += ", "
 		}
 		locationString += location[i];
 	}
-	for (i=0; i<procedure.length; i++) {
+	for (var i=0; i<procedure.length; i++) {
 		if (i!=0) {
 			procedureString += ", "
 		}
 		procedureString += procedure[i];
 	}
 
-	for (i=0; i<part.length; i++) {
+	for (var i=0; i<part.length; i++) {
         if (i!=0) {
                 partString += ", "
         }
@@ -387,7 +386,7 @@ function generateWhiteSpaceReport(isBiopsy, useTabs) {
     }
 
 
-    for (i=0; i<diagnosisType.length; i++) {
+    for (var i=0; i<diagnosisType.length; i++) {
         if (i!=0) {
                 diagnosisTypeString += ", "
         }
@@ -417,6 +416,7 @@ function generateWhiteSpaceReport(isBiopsy, useTabs) {
 }
 
 function generateWhiteSpaceReportLine(label, value, isBiopsy, lineNum, numLines, useTabs){
+	var shortLineOffset = label.length < 10 || lineNum != 0 ? -1 : 0;
 	if (lineNum!= numLines - 1){
 		value += ",";
 	}
@@ -435,7 +435,7 @@ function generateWhiteSpaceReportLine(label, value, isBiopsy, lineNum, numLines,
 	if (lineNum == 0){
 		if (useTabs) {
 			if (label.length < maxTabLabelLength) {
-				report += label + "\t".repeat(Math.ceil((tabLineLengthToStart - label.length)/tabLength));
+				report += label + "\t".repeat(Math.ceil((tabLineLengthToStart - label.length)/tabLength ) + shortLineOffset);
 			} else {
 				var spaceIndex = maxTabLabelLength - 1;
 				while (spaceIndex > 0) {
@@ -446,8 +446,9 @@ function generateWhiteSpaceReportLine(label, value, isBiopsy, lineNum, numLines,
 				}
 				startLabel = label.substring(0, spaceIndex);
 				endLabel = label.substring(spaceIndex);
+				shortLineOffset = endLabel.length < 10 ? -1 : 0;
 				report += startLabel + "</p>";
-				report += "<p>\t" + endLabel + "\t".repeat(Math.ceil((tabLineLengthToStart - endLabel.length - tabLength)/tabLength));
+				report += "<p>\t" + endLabel + "\t".repeat(Math.ceil((tabLineLengthToStart - endLabel.length - tabLength)/tabLength ) + shortLineOffset);
 			}
 		}
 		else {
@@ -456,7 +457,7 @@ function generateWhiteSpaceReportLine(label, value, isBiopsy, lineNum, numLines,
 	}
 	else {
 		if (useTabs) {
-			report += "\t".repeat(Math.ceil((tabLineLengthToStart)/tabLength));
+			report += "\t".repeat(Math.ceil((tabLineLengthToStart)/tabLength) + shortLineOffset);
 		}
 		else {
 			report += " ".repeat(longestPropertyName + 1);
@@ -466,11 +467,12 @@ function generateWhiteSpaceReportLine(label, value, isBiopsy, lineNum, numLines,
 		report += value + "</p>";
 	}
 	else {
+		shortLineOffset = -1;
 		var factor = useTabs ? tabLineLengthToStart : longestPropertyName - 1;
 		while (value.length > longestReportLengthTabs - factor) {
 			var foundSpace = false;
 			var index = longestReportLengthTabs - factor;
-			for (i = index; i>=0; i--) {
+			for (var i = index; i>=0; i--) {
 				if (value[i] == " ") {
 					index = i;
 					foundSpace = true;
@@ -487,7 +489,7 @@ function generateWhiteSpaceReportLine(label, value, isBiopsy, lineNum, numLines,
 			}
 			if (isBiopsy){
 				if (useTabs) {
-					report += "<p>" + "\t".repeat(Math.ceil((tabLineLengthToStart)/tabLength) + 1);
+					report += "<p>" + "\t".repeat(Math.ceil((tabLineLengthToStart)/tabLength) + 1 + shortLineOffset);
 				}
 				else {
 					report += "<p>" + " ".repeat(longestPropertyName + 1 + tabLength);
@@ -495,7 +497,7 @@ function generateWhiteSpaceReportLine(label, value, isBiopsy, lineNum, numLines,
 			}	
 			else {
 				if (useTabs) {
-					report += "<p>" + "\t".repeat(Math.ceil((tabLineLengthToStart)/tabLength));
+					report += "<p>" + "\t".repeat(Math.ceil((tabLineLengthToStart)/tabLength) + shortLineOffset);
 				} 
 				else {
 					report += "<p>" + " ".repeat(longestPropertyName + 1);
@@ -521,7 +523,7 @@ function generateReportTwoLines() {
 		var values = getPropertyValue(this);
 		
 		//Add line to report
-		for (j = 0; j< values.length; j++){
+		for (var j = 0; j< values.length; j++){
 			var value = values[j];
 			if (j!= values.length-1){
 				value += ",";
@@ -540,7 +542,7 @@ function generateReportTwoLines() {
 					while (value.length > longestReportLengthTabs-tabLength) {
 						var foundSpace = false;
 						var index = longestReportLengthTabs-tabLength - 1;
-						for (i = index; i>=0; i--) {
+						for (var i = index; i>=0; i--) {
 							if (value[i] == " ") {
 								index = i;
 								foundSpace = true;
