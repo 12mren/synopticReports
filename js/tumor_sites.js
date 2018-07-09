@@ -2,12 +2,11 @@ var tumorName = "";
 var reportHeader = "| TUMOR SUMMARY:";
 var longestPropertyName = reportHeader.length;
 var longestReportLengthTabs = 72;
-var tabLength = 5;
+var tabLength = 6;
 var biopsyType = "";
 var skipLabel = "?????YOU SKIPPED THIS!!!!!";
 var freeTextLabel = "Free text:";
-var tabLineLengthToStart = tabLength - (longestPropertyName % tabLength) + longestPropertyName
-var maxTabLabelLength = 37 // 35 + '|' + ' ' or '\t'
+var tabsToStart = 7;
 
 //Get the parameters passed into the URL
 var QueryString = function () {
@@ -102,11 +101,6 @@ function generateTumorFormHTML(tumorProperties) {
 		//3 for '|', ' ', and ':' characters added to property name in report output
 		if (propertyName.length + 3 > longestPropertyName) {
 			longestPropertyName = propertyName.length + 3;
-			if (longestPropertyName <= maxTabLabelLength) {
-				tabLineLengthToStart = tabLength - (longestPropertyName % tabLength) + longestPropertyName;
-			} else {
-				tabLineLengthToStart = tabLength - (maxTabLabelLength % tabLength) + maxTabLabelLength;
-			}
 		}
 		var propertyDescription = property.description!=null ? " [" + property.description + "]" : "";
 		var propertyOptions = property.options;
@@ -402,7 +396,7 @@ function generateWhiteSpaceReport(isBiopsy, useTabs) {
 	}
 	else {
 		if (useTabs) {
-			report = "<p>" + reportHeader + "\t".repeat(Math.ceil((tabLineLengthToStart - reportHeader.length)/tabLength)) + tumorName + "</p>" + report; 
+			report = "<p>" + reportHeader + "\t".repeat(tabsToStart - Math.floor(reportHeader.length/tabLength)) + tumorName + "</p>" + report; 
 		} else {
 			report = "<p>" + reportHeader + " ".repeat(longestPropertyName + 1 - reportHeader.length) + tumorName + "</p>" + report; 
 		}
@@ -416,7 +410,6 @@ function generateWhiteSpaceReport(isBiopsy, useTabs) {
 }
 
 function generateWhiteSpaceReportLine(label, value, isBiopsy, lineNum, numLines, useTabs){
-	var shortLineOffset = label.length < 10 || lineNum != 0 ? -1 : 0;
 	if (lineNum!= numLines - 1){
 		value += ",";
 	}
@@ -434,10 +427,10 @@ function generateWhiteSpaceReportLine(label, value, isBiopsy, lineNum, numLines,
 	}
 	if (lineNum == 0){
 		if (useTabs) {
-			if (label.length < maxTabLabelLength) {
-				report += label + "\t".repeat(Math.ceil((tabLineLengthToStart - label.length)/tabLength ) + shortLineOffset);
+			if (label.length < (tabsToStart - 1) * tabLength) {
+				report += label + "\t".repeat(tabsToStart - Math.floor(label.length/tabLength));
 			} else {
-				var spaceIndex = maxTabLabelLength - 1;
+				var spaceIndex = (tabsToStart - 1) * tabLength - 1;
 				while (spaceIndex > 0) {
 					if (label[spaceIndex] == " ") {
 						break;
@@ -446,9 +439,8 @@ function generateWhiteSpaceReportLine(label, value, isBiopsy, lineNum, numLines,
 				}
 				startLabel = label.substring(0, spaceIndex);
 				endLabel = label.substring(spaceIndex);
-				shortLineOffset = endLabel.length < 10 ? -1 : 0;
 				report += startLabel + "</p>";
-				report += "<p>\t" + endLabel + "\t".repeat(Math.ceil((tabLineLengthToStart - endLabel.length - tabLength)/tabLength ) + shortLineOffset);
+				report += "<p>\t" + endLabel + "\t".repeat(tabsToStart - 1 - Math.floor(endLabel.length/tabLength));
 			}
 		}
 		else {
@@ -457,7 +449,7 @@ function generateWhiteSpaceReportLine(label, value, isBiopsy, lineNum, numLines,
 	}
 	else {
 		if (useTabs) {
-			report += "\t".repeat(Math.ceil((tabLineLengthToStart)/tabLength) + shortLineOffset);
+			report += "\t".repeat(tabsToStart);
 		}
 		else {
 			report += " ".repeat(longestPropertyName + 1);
@@ -467,8 +459,7 @@ function generateWhiteSpaceReportLine(label, value, isBiopsy, lineNum, numLines,
 		report += value + "</p>";
 	}
 	else {
-		shortLineOffset = -1;
-		var factor = useTabs ? tabLineLengthToStart : longestPropertyName - 1;
+		var factor = useTabs ? tabsToStart * tabLength : longestPropertyName - 1;
 		while (value.length > longestReportLengthTabs - factor) {
 			var foundSpace = false;
 			var index = longestReportLengthTabs - factor;
@@ -489,7 +480,7 @@ function generateWhiteSpaceReportLine(label, value, isBiopsy, lineNum, numLines,
 			}
 			if (isBiopsy){
 				if (useTabs) {
-					report += "<p>" + "\t".repeat(Math.ceil((tabLineLengthToStart)/tabLength) + 1 + shortLineOffset);
+					report += "<p>" + "\t".repeat(tabsToStart + 1);
 				}
 				else {
 					report += "<p>" + " ".repeat(longestPropertyName + 1 + tabLength);
@@ -497,7 +488,7 @@ function generateWhiteSpaceReportLine(label, value, isBiopsy, lineNum, numLines,
 			}	
 			else {
 				if (useTabs) {
-					report += "<p>" + "\t".repeat(Math.ceil((tabLineLengthToStart)/tabLength) + shortLineOffset);
+					report += "<p>" + "\t".repeat(tabsToStart);
 				} 
 				else {
 					report += "<p>" + " ".repeat(longestPropertyName + 1);

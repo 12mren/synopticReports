@@ -2,9 +2,9 @@
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    -moz-tab-size: 5; /* Firefox */
-    -o-tab-size: 5; /* Opera 10.6-12.1 */
-    tab-size: 5;
+    -moz-tab-size: 6; /* Firefox */
+    -o-tab-size: 6; /* Opera 10.6-12.1 */
+    tab-size: 6;
 }
 
 
