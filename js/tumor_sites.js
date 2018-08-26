@@ -615,12 +615,12 @@ function getPropertyValue(tableRow) {
 			var additionalInputs = "";
 			($(":nth-child(2) > [class='" + selectedClass + "']", tableRow)).each(function() {
 				if ($(this).attr('type') !== 'radio' && $(this).attr('type')!== 'checkbox') {
-					var addedComma = false;
+					var addedSpace = false;
 					var additionalInput = $(this).val().trim();
 					if (additionalInput.replace(/ /g, '') != "") {
 						if (count!=0 || tempValue.replace(/ /g,'') != "" ){
-							additionalInputs += ", "
-							addedComma = true;
+							additionalInputs += " "
+							addedSpace = true;
 						}
 						additionalInputs += additionalInput;
 						count ++;
@@ -628,12 +628,12 @@ function getPropertyValue(tableRow) {
 					if ($(this).attr('type') === 'text') {
 						var labelId = $(this).attr("id");
 						var labelText = $("label[for='" + labelId + "']").text().trim();
-						if (labelText != "" && !addedComma) {
-							additionalInputs += ", " + labelText;
-							addedComma = true;
+						if (labelText != "" && !addedSpace) {
+							additionalInputs += " " + labelText;
+							addedSpace = true;
 						}
 						else {
-							additionalInputs += "" + labelText;
+							additionalInputs += labelText;
 						}
 					}
 				}
